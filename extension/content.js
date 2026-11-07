@@ -132,16 +132,33 @@
   // bar share one layer. Keep popovers by allowlist, never drawers or tweets.
   const COMPOSER_POPOVER='[data-testid="HoverCard"],[data-testid="toast"],[data-testid="confirmationSheetDialog"],[role="menu"],[role="listbox"],[role="alertdialog"],[role="alert"],[role="dialog"]';
   const NEVER_OVERLAY='article[data-testid="tweet"],[data-testid="primaryColumn"],[data-testid="DMDrawer"],[data-testid="chat-drawer-root"],[data-testid="GrokDrawer"],[data-testid="BottomBar"]';
+  // Pop-ups X opens from a post, profile, notifications etc.: the Repost/Quote and "…" menus,
+  // confirmation sheets, toasts and hover cards. Never plain dialogs, drawers or timelines.
+  const VIEW_POPOVER='[data-testid="HoverCard"],[data-testid="toast"],[data-testid="confirmationSheetDialog"],[role="menu"],[role="listbox"],[role="alertdialog"],[role="alert"]';
   function markComposerLayers(candidate) {
-    // X renders the discard/save sheet, toasts, emoji and audience menus as
-    // sibling layers of the composer. Keep them usable; never a timeline or drawer.
+    // X renders menus, sheets and toasts as sibling layers in #layers. Keep the ones that
+    // belong to what's on screen usable; never a timeline or drawer.
     for (const node of document.querySelectorAll('[data-sf-overlay]')) node.removeAttribute('data-sf-overlay');
+    for (const node of document.querySelectorAll('[data-sf-layer-path]')) { node.removeAttribute('data-sf-layer-path'); node.removeAttribute('data-sf-path'); }
     const layers=document.getElementById('layers');
-    if (approved?.kind !== 'compose' || !candidate || !layers?.contains(candidate)) return;
-    for (const layer of layers.children) {
-      if (layer.contains(candidate) || layer.querySelector(NEVER_OVERLAY)) continue;
-      if (layer.matches(COMPOSER_POPOVER) || layer.querySelector(COMPOSER_POPOVER)) layer.setAttribute('data-sf-overlay','');
+    if (!candidate || !layers || approved?.site !== 'x') return;
+    if (approved.kind === 'compose') {
+      if (!layers.contains(candidate)) return;
+      for (const layer of layers.children) {
+        if (layer.contains(candidate) || layer.querySelector(NEVER_OVERLAY)) continue;
+        if (layer.matches(COMPOSER_POPOVER) || layer.querySelector(COMPOSER_POPOVER)) layer.setAttribute('data-sf-overlay','');
+      }
+      return;
     }
+    if (layers.contains(candidate)) return;
+    let shown=false;
+    for (const layer of layers.children) {
+      if (layer.querySelector(NEVER_OVERLAY)) continue;
+      if (layer.matches(VIEW_POPOVER) || layer.querySelector(VIEW_POPOVER)) { layer.setAttribute('data-sf-overlay',''); shown=true; }
+    }
+    if (!shown) return;
+    // Reveal #layers as a path (so its other layers stay hidden), marking what we add to undo it later.
+    for (let node=layers; node && !node.hasAttribute('data-sf-path'); node=node.parentElement) { node.setAttribute('data-sf-path',''); node.setAttribute('data-sf-layer-path',''); }
   }
   // On a post, "Discover more" ends the replies: everything after it is recommendations.
   // On profiles and search, X inserts self-contained blocks (e.g. "Who to follow" with

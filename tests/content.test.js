@@ -346,6 +346,22 @@ test('sibling layers stay hidden on every non-compose view',async()=>{
   const {dom,doc,concealed,display}=await fixture(`<body><main>${column(tweet())}</main><div id="layers"><div id="hover">Hover card</div></div></body>`,'https://x.com/alice/status/123');
   try { assert.equal(doc.querySelector('[data-sf-overlay]'),null); assert.equal(display(doc.getElementById('layers')),'none'); }finally{dom.window.close();}
 });
+test('on a post, X\'s own menus (Repost / Quote) and sheets are usable; drawers and other layers stay hidden',async()=>{
+  // Live x.com (2026-11): the Repost button opens a role=menu in #layers, a sibling of the app.
+  const html=`<body><div id="app"><main>${column(tweet())}</main></div><div id="layers"><div id="menu-layer"><div role="menu" id="menu"><div role="menuitem">Repost</div><div role="menuitem" id="quote">Quote</div></div></div><div id="drawer"><div data-testid="DMDrawer">Messages</div></div><div id="other"><div>Some future layer</div></div></div></body>`;
+  const {dom,doc,concealed,display}=await fixture(html,'https://x.com/alice/status/123');
+  try {
+    assert.equal(concealed(doc.getElementById('quote')),false);
+    assert.equal(concealed(doc.getElementById('post-123')),false);
+    assert.equal(concealed(doc.getElementById('drawer')),true);
+    assert.equal(concealed(doc.getElementById('other')),true);
+    // When the menu closes, #layers is hidden again.
+    doc.getElementById('menu-layer').remove();
+    await pause();
+    assert.equal(display(doc.getElementById('layers')),'none');
+    assert.equal(doc.querySelector('[data-sf-layer-path]'),null);
+  } finally { dom.window.close(); }
+});
 test('the topmost composer wins over an editor in a lower dialog layer',async()=>{
   const html=`<body><div id="layers"><div id="photo-layer"><div role="dialog" id="photo"><article data-testid="tweet">Photo replies</article><div data-testid="tweetTextarea_0">Inline reply</div></div></div>
     <div id="composer-layer"><div role="dialog" id="outer"><div role="dialog" id="inner"><div data-testid="tweetTextarea_0">Draft</div></div></div></div></div></body>`;
