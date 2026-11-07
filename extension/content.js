@@ -75,6 +75,30 @@
     }
     return null;
   }
+  /** The signed-in Instagram username: the session cookie's user id, looked up in the page's own data. */
+  function instagramOwnUsername() {
+    const id=(document.cookie.match(/(?:^|; )ds_user_id=(\d{1,25})(?:;|$)/) || [])[1];
+    if (id) {
+      // The exact id (not a longer one that starts with it), then that object's username.
+      const pattern=new RegExp('"(?:id|pk|pk_id)":"?'+id+'(?!\\d)"?[^{}]{0,600}?"username":"([A-Za-z0-9_.]{1,30})"');
+      for (const script of document.querySelectorAll('script:not([src])')) { const match=script.textContent.match(pattern); if (match) return match[1]; }
+    }
+    const link=[...document.querySelectorAll('a[href]')].find(a => /^\/[A-Za-z0-9_.]{1,30}\/$/.test(a.getAttribute('href')) && /^Profile$/i.test(a.textContent.trim()));
+    return link ? link.getAttribute('href').slice(1, -1) : null;
+  }
+  /** Instagram's Saved is /<you>/saved/: from the start page, go there once "you" is known. */
+  let savedRedirectFrom=null;
+  function goToInstagramSaved() {
+    if (savedRedirectFrom === location.href) return true;  // already on its way
+    const user=instagramOwnUsername();
+    if (!user) return false;
+    const target=`${location.origin}/${user}/saved/`;
+    if (P.view(target)?.kind !== 'saved') return false;
+    savedRedirectFrom=location.href;
+    // Tests replace this (jsdom can't navigate); the page itself can't reach this isolated world.
+    (globalThis.SocialContentHooks?.replace ?? (url => location.replace(url)))(target);
+    return true;
+  }
   function instagramInboxShell() {
     // Mobile web (iOS app, 2026-11): no <main>. The inbox list is a role=navigation
     // column inside a <section> shell; a thread is the same shell with a message box.
@@ -243,7 +267,8 @@
       return;
     }
     let candidate = null;
-    if (view.kind === 'notifications' && view.panel) candidate=instagramNotifications();
+    if (view.kind === 'saved' && view.redirect) { if (goToInstagramSaved()) { hide(); return; } }
+    else if (view.kind === 'notifications' && view.panel) candidate=instagramNotifications();
     else if (view.kind === 'compose') {
       // Home also contains tweetTextarea_0. Reveal only the composer dialog,
       // never the background timeline's inline editor or its enclosing main.
@@ -258,7 +283,7 @@
     } else if (view.kind === 'messages') {
       // PIN/setup and new-conversation dialogs are part of the native inbox.
       candidate=document.querySelector('[role="dialog"]:not([aria-hidden="true"]):not([hidden])') || document.querySelector('main,[role="main"]') || (view.site === 'instagram' ? instagramInboxShell() : null);
-    } else if (view.kind === 'profile' || view.kind === 'search' || view.kind === 'notifications') {
+    } else if (view.kind === 'profile' || view.kind === 'search' || view.kind === 'notifications' || view.kind === 'saved') {
       candidate = document.querySelector(view.site === 'x' ? '[data-testid="primaryColumn"]' : 'main');
     } else if (view.kind === 'capture') {
       isolateCapture();
@@ -278,7 +303,7 @@
       }
     }
     if (approved !== view) return; // A newer check took over; it will isolate again.
-    if (candidate && view.site === 'x' && ['post','profile','search'].includes(view.kind)) trimRecommendations(candidate, view.kind);
+    if (candidate && view.site === 'x' && ['post','profile','search','saved'].includes(view.kind)) trimRecommendations(candidate, view.kind);
     if (candidate && view.site === 'instagram' && view.kind === 'messages') hideInstagramNotes(candidate);
     document.documentElement.setAttribute('data-sf-view',view.kind);
     document.documentElement.toggleAttribute('data-sf-panel',!!view.panel);

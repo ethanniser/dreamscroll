@@ -3,7 +3,7 @@
 
 <p align="center">
   <b>X and Instagram without the doom scroll.</b><br>
-  Just the things you came for: your messages, notifications, the people and posts you look up,<br>
+  Just the things you came for: your messages, notifications, saved posts, the people and posts you look up,<br>
   and the best of your feed. No endless timeline, no distractions.
 </p>
 
@@ -22,7 +22,7 @@ The top of your feed is the best of it. Dreamscroll gives you that part, so you 
 
 ## What it does
 
-Dreamscroll sits between you and the feeds. Everything **deliberate** still works: messages, notifications, posting, profiles you look up, posts people send you, searches you type. Everything **ambient** (the home timeline, Explore, Reels, recommendation rails) is gone.
+Dreamscroll sits between you and the feeds. Everything **deliberate** still works: messages, notifications, saved posts, posting, profiles you look up, posts people send you, searches you type. Everything **ambient** (the home timeline, Explore, Reels, recommendation rails) is gone.
 
 To keep up with what's going on, you get **the top of your For You feed**: a short batch of the best posts X would have shown you, on a calm page of its own. Read through it, open anything worth a closer look on X, and when the batch is done, it's done. No pull-to-refresh, no "show more".
 
@@ -89,7 +89,7 @@ The iPhone app is a small browser for X and Instagram with the same rules: you s
 
 ## Features
 
-- **Feeds hidden, purpose kept.** Posts, threads, profiles, notifications, DMs, the composer and typed searches work normally. Home timelines, Explore, Reels, stories and "Who to follow" don't.
+- **Feeds hidden, purpose kept.** Posts, threads, profiles, notifications, DMs, saved posts (X Bookmarks, Instagram Saved), the composer and typed searches work normally. Home timelines, Explore, Reels, stories and "Who to follow" don't.
 - **The best of your feed, in batches.** A short batch of your top For You posts on Dreamscroll's own page, with links, previews, quotes and media. Then it's done for a while.
 - **Read at your pace.** Mark posts read as you go, open any of them on X, and find the ones you've read underneath.
 - **iPhone app** with in-app sign-in, a share extension and a Safari blocker.

@@ -126,10 +126,11 @@ struct DashboardView: View {
                 }
             } else {
                 if site == .x { forYou }
-                HStack(spacing: 8) {
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: 8), GridItem(.flexible(), spacing: 8)], spacing: 8) {
                     Button("Notifications") { Task { await model.open(.notifications, on: site) } }
                     Button("Messages") { Task { await model.open(.messages, on: site) } }
                     if site == .x { Button("Post") { Task { await model.open(.compose, on: site) } } }
+                    Button("Saved") { Task { await model.open(.saved, on: site) } }
                 }
                 .buttonStyle(TileStyle())
             }

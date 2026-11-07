@@ -42,18 +42,26 @@
       ['compose','/compose/(?:post|tweet)/?'],
       // Composer sub-pages: drafts, scheduling, GIF search. Leaving them would discard the draft.
       ['compose','/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?',true],
-      ['compose','/i/foundmedia/search/?',true]
+      ['compose','/i/foundmedia/search/?',true],
+      // Saved posts: Bookmarks and bookmark folders, which X now redirects to /i/history (live 2026-11).
+      ['saved','/i/bookmarks(?:/[0-9]+)?/?'],
+      ['saved','/i/history(?:/[a-z_]+)?/?']
     ].map(([kind,path,subpage]) => ({site:'x',kind,...(subpage ? {subpage:true} : {}),pattern:`^https://${escape(host)}${path}${end}`}))),
     ...igHosts.map(host => ({site:'instagram',kind:'notifications',panel:true,pattern:`^https://${escape(host)}/\\?sf_personal=notifications(?:[&#]|$)`})),
+    // Saved lives at /<you>/saved/; this start page finds "you" and goes there.
+    ...igHosts.map(host => ({site:'instagram',kind:'saved',redirect:true,pattern:`^https://${escape(host)}/\\?sf_personal=saved(?:[&#]|$)`})),
     ...igHosts.flatMap(host => [
       ['notifications','/accounts/activity/?'],
       ['notifications','/notifications/?'],
-      ['messages','/direct(?:/[A-Za-z0-9_-]+)*/?']
+      ['messages','/direct(?:/[A-Za-z0-9_-]+)*/?'],
+      // Saved posts and collections (only your own are visible to you).
+      // Unbounded repeats: Chrome compiles these with RE2 under a 2 KB budget, and {m,n} counts blow it.
+      ['saved','/[A-Za-z0-9_.]+/saved(?:/all-posts|/[A-Za-z0-9_.-]+/[0-9]+)?/?']
     ].map(([kind,path]) => ({site:'instagram',kind,pattern:`^https://${escape(host)}${path}${end}`})))
   ];
   const personalURLs = {
-    x:{notifications:'https://x.com/notifications',messages:'https://x.com/i/chat',compose:'https://x.com/compose/post'},
-    instagram:{notifications:'https://www.instagram.com/?sf_personal=notifications',messages:'https://www.instagram.com/direct/inbox/'}
+    x:{notifications:'https://x.com/notifications',messages:'https://x.com/i/chat',compose:'https://x.com/compose/post',saved:'https://x.com/i/bookmarks'},
+    instagram:{notifications:'https://www.instagram.com/?sf_personal=notifications',messages:'https://www.instagram.com/direct/inbox/',saved:'https://www.instagram.com/?sf_personal=saved'}
   };
   function view(raw) {
     const target = post(raw);
@@ -62,7 +70,7 @@
       const url = new URL(raw), name = site(raw);
       if (!name || url.protocol !== 'https:' || url.port || url.username || url.password) return null;
       const personal = personalEntries.find(entry => new RegExp(entry.pattern).test(url.href));
-      if (personal) return {kind:personal.kind,site:name,...(personal.panel ? {panel:true} : {}),...(personal.subpage ? {subpage:true} : {})};
+      if (personal) return {kind:personal.kind,site:name,...(personal.panel ? {panel:true} : {}),...(personal.subpage ? {subpage:true} : {}),...(personal.redirect ? {redirect:true} : {})};
       const path = url.pathname.replace(/\/$/, '');
       if (!path || (name === 'x' && path === '/home')) return {kind:'home',site:name};
       // A search is a destination only when typed: cashtag/trend/hashtag clicks
@@ -95,7 +103,7 @@
     }
     url.hash = '';
     const kind = view(url.href);
-    if (!['profile','search','notifications','messages','compose'].includes(kind?.kind)) return null;
+    if (!['profile','search','notifications','messages','compose','saved'].includes(kind?.kind)) return null;
     if (kind.kind !== 'search') url.search = kind.panel ? '?sf_personal=notifications' : '';
     return {site:site(url.href),url:url.href};
   }
@@ -111,7 +119,9 @@
     profilePatterns.forEach((regexFilter,i) => rules.push({id:200+i,priority:10,action:{type:'allow'},condition:{regexFilter,isUrlFilterCaseSensitive:true,resourceTypes:['main_frame']}}));
     // Home/search are also syntactically single-segment handles: gate them above
     // profile rules. A search with a query has its own direct rule; blank search is gated.
-    for (const domain of ['x.com','twitter.com']) for (const path of ['home','search']) rules.push({id:300+rules.length,priority:15,action:{type:'redirect',redirect:{extensionPath:'/blocked.html?site=x'}},condition:{urlFilter:`||${domain}/${path}^`,resourceTypes:['main_frame']}});
+    // A fixed block (600+), so adding personal routes (400+) never shifts these ids.
+    let gate=600;
+    for (const domain of ['x.com','twitter.com']) for (const path of ['home','search']) rules.push({id:gate++,priority:15,action:{type:'redirect',redirect:{extensionPath:'/blocked.html?site=x'}},condition:{urlFilter:`||${domain}/${path}^`,resourceTypes:['main_frame']}});
     for (const [name,domains,paths] of [['x',['x.com','twitter.com'],reservedX.filter(path => !['home','search'].includes(path))],['instagram',['instagram.com'],reservedIG]]) {
       for (const domain of domains) for (const path of paths) rules.push({id:1000+rules.length,priority:50,action:{type:'redirect',redirect:{extensionPath:`/blocked.html?site=${name}`}},condition:{urlFilter:`||${domain}/${path}^`,resourceTypes:['main_frame']}});
     }

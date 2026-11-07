@@ -27,7 +27,7 @@ final class AppModel: FeedHost {
 
     private let policy = PolicyEngine.shared
 
-    enum Action: String { case notifications, messages, compose }
+    enum Action: String { case notifications, messages, compose, saved }
 
     func url(for action: Action, on site: Site) -> URL? {
         switch (site, action) {
@@ -38,6 +38,9 @@ final class AppModel: FeedHost {
         case (.instagram, .notifications): URL(string: "https://www.instagram.com/accounts/activity/")
         case (.instagram, .messages): URL(string: "https://www.instagram.com/direct/inbox/")
         case (.instagram, .compose): nil
+        // Saved posts: X's Bookmarks; Instagram's start page finds your /<you>/saved/ (content.js).
+        case (.x, .saved): URL(string: "https://x.com/i/bookmarks")
+        case (.instagram, .saved): URL(string: "https://www.instagram.com/?sf_personal=saved")
         }
     }
 
@@ -215,7 +218,7 @@ final class AppModel: FeedHost {
         browser = nil
         switch outcome {
         case .closed: notice = nil
-        case .blockedFeed(let site): notice = Notice(text: "That was \(site.name)’s feed, so it closed. Pick somewhere specific.")
+        case .blockedFeed(let site): notice = Notice(text: "That was \(site.name)’s feed, so it closed. Pick somewhere specific. ")
         case .signedIn: notice = nil
         case .unlock: afterDismiss = { [weak self] in await self?.unlock() }
         case .budgetUsed: notice = Notice(text: "That’s today’s full scrolling. The feed batch is still on the dashboard.")

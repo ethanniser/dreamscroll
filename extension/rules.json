@@ -480,7 +480,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.x\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
+      "regexFilter": "^https://x\\.com/i/bookmarks(?:/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -494,7 +494,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.x\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://x\\.com/i/history(?:/[a-z_]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -508,7 +508,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.x\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.x\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -522,7 +522,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.x\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.x\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -536,7 +536,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.x\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.x\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -550,7 +550,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.x\\.com/i/foundmedia/search/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.x\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -564,7 +564,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.x\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.x\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -578,7 +578,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.x\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.x\\.com/i/foundmedia/search/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -592,7 +592,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.x\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.x\\.com/i/bookmarks(?:/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -606,7 +606,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.x\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.x\\.com/i/history(?:/[a-z_]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -620,7 +620,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.x\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.x\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -634,7 +634,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.x\\.com/i/foundmedia/search/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.x\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -648,7 +648,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://twitter\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.x\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -662,7 +662,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://twitter\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.x\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -676,7 +676,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://twitter\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.x\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -690,7 +690,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://twitter\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.x\\.com/i/foundmedia/search/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -704,7 +704,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://twitter\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.x\\.com/i/bookmarks(?:/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -718,7 +718,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://twitter\\.com/i/foundmedia/search/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.x\\.com/i/history(?:/[a-z_]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -732,7 +732,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.twitter\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
+      "regexFilter": "^https://twitter\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -746,7 +746,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.twitter\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://twitter\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -760,7 +760,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.twitter\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://twitter\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -774,7 +774,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.twitter\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
+      "regexFilter": "^https://twitter\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -788,7 +788,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.twitter\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
+      "regexFilter": "^https://twitter\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -802,7 +802,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.twitter\\.com/i/foundmedia/search/?(?:[?#]|$)",
+      "regexFilter": "^https://twitter\\.com/i/foundmedia/search/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -816,7 +816,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.twitter\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
+      "regexFilter": "^https://twitter\\.com/i/bookmarks(?:/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -830,7 +830,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.twitter\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://twitter\\.com/i/history(?:/[a-z_]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -844,7 +844,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.twitter\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.twitter\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -858,7 +858,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.twitter\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.twitter\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -872,7 +872,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.twitter\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.twitter\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -886,7 +886,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://mobile\\.twitter\\.com/i/foundmedia/search/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.twitter\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -900,7 +900,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "regexFilter": "^https://www\\.twitter\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -914,7 +914,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "regexFilter": "^https://www\\.twitter\\.com/i/foundmedia/search/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -928,7 +928,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://m\\.instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "regexFilter": "^https://www\\.twitter\\.com/i/bookmarks(?:/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -942,7 +942,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/accounts/activity/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.twitter\\.com/i/history(?:/[a-z_]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -956,7 +956,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/notifications/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.twitter\\.com/notifications(?:/(?:mentions|verified))?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -970,7 +970,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.twitter\\.com/messages(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -984,7 +984,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/accounts/activity/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.twitter\\.com/i/chat(?:/[A-Za-z0-9_:-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -998,7 +998,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/notifications/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.twitter\\.com/compose/(?:post|tweet)/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1012,7 +1012,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.twitter\\.com/compose/(?:post|tweet)(?:/[A-Za-z0-9_-]+){1,3}/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1026,7 +1026,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://m\\.instagram\\.com/accounts/activity/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.twitter\\.com/i/foundmedia/search/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1040,7 +1040,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://m\\.instagram\\.com/notifications/?(?:[?#]|$)",
+      "regexFilter": "^https://mobile\\.twitter\\.com/i/bookmarks(?:/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1054,7 +1054,259 @@
       "type": "allow"
     },
     "condition": {
+      "regexFilter": "^https://mobile\\.twitter\\.com/i/history(?:/[a-z_]+)?/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 448,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 449,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://www\\.instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 450,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://m\\.instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 451,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://instagram\\.com/\\?sf_personal=saved(?:[&#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 452,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://www\\.instagram\\.com/\\?sf_personal=saved(?:[&#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 453,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://m\\.instagram\\.com/\\?sf_personal=saved(?:[&#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 454,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://instagram\\.com/accounts/activity/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 455,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://instagram\\.com/notifications/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 456,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 457,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://instagram\\.com/[A-Za-z0-9_.]+/saved(?:/all-posts|/[A-Za-z0-9_.-]+/[0-9]+)?/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 458,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://www\\.instagram\\.com/accounts/activity/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 459,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://www\\.instagram\\.com/notifications/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 460,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://www\\.instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 461,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://www\\.instagram\\.com/[A-Za-z0-9_.]+/saved(?:/all-posts|/[A-Za-z0-9_.-]+/[0-9]+)?/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 462,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://m\\.instagram\\.com/accounts/activity/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 463,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://m\\.instagram\\.com/notifications/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 464,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
       "regexFilter": "^https://m\\.instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
+      "isUrlFilterCaseSensitive": true,
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 465,
+    "priority": 100,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://m\\.instagram\\.com/[A-Za-z0-9_.]+/saved(?:/all-posts|/[A-Za-z0-9_.-]+/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1272,7 +1524,7 @@
     }
   },
   {
-    "id": 390,
+    "id": 600,
     "priority": 15,
     "action": {
       "type": "redirect",
@@ -1288,7 +1540,7 @@
     }
   },
   {
-    "id": 391,
+    "id": 601,
     "priority": 15,
     "action": {
       "type": "redirect",
@@ -1304,7 +1556,7 @@
     }
   },
   {
-    "id": 392,
+    "id": 602,
     "priority": 15,
     "action": {
       "type": "redirect",
@@ -1320,7 +1572,7 @@
     }
   },
   {
-    "id": 393,
+    "id": 603,
     "priority": 15,
     "action": {
       "type": "redirect",
@@ -1336,7 +1588,7 @@
     }
   },
   {
-    "id": 1094,
+    "id": 1112,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1352,7 +1604,7 @@
     }
   },
   {
-    "id": 1095,
+    "id": 1113,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1368,7 +1620,7 @@
     }
   },
   {
-    "id": 1096,
+    "id": 1114,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1384,7 +1636,7 @@
     }
   },
   {
-    "id": 1097,
+    "id": 1115,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1400,7 +1652,7 @@
     }
   },
   {
-    "id": 1098,
+    "id": 1116,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1416,7 +1668,7 @@
     }
   },
   {
-    "id": 1099,
+    "id": 1117,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1432,7 +1684,7 @@
     }
   },
   {
-    "id": 1100,
+    "id": 1118,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1448,7 +1700,7 @@
     }
   },
   {
-    "id": 1101,
+    "id": 1119,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1464,7 +1716,7 @@
     }
   },
   {
-    "id": 1102,
+    "id": 1120,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1480,7 +1732,7 @@
     }
   },
   {
-    "id": 1103,
+    "id": 1121,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1496,7 +1748,7 @@
     }
   },
   {
-    "id": 1104,
+    "id": 1122,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1512,7 +1764,7 @@
     }
   },
   {
-    "id": 1105,
+    "id": 1123,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1528,7 +1780,7 @@
     }
   },
   {
-    "id": 1106,
+    "id": 1124,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1544,7 +1796,7 @@
     }
   },
   {
-    "id": 1107,
+    "id": 1125,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1560,7 +1812,7 @@
     }
   },
   {
-    "id": 1108,
+    "id": 1126,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1576,7 +1828,7 @@
     }
   },
   {
-    "id": 1109,
+    "id": 1127,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1592,7 +1844,7 @@
     }
   },
   {
-    "id": 1110,
+    "id": 1128,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1608,7 +1860,7 @@
     }
   },
   {
-    "id": 1111,
+    "id": 1129,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1624,7 +1876,7 @@
     }
   },
   {
-    "id": 1112,
+    "id": 1130,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1640,7 +1892,7 @@
     }
   },
   {
-    "id": 1113,
+    "id": 1131,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1656,7 +1908,7 @@
     }
   },
   {
-    "id": 1114,
+    "id": 1132,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1672,7 +1924,7 @@
     }
   },
   {
-    "id": 1115,
+    "id": 1133,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1688,7 +1940,7 @@
     }
   },
   {
-    "id": 1116,
+    "id": 1134,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1704,7 +1956,7 @@
     }
   },
   {
-    "id": 1117,
+    "id": 1135,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1720,7 +1972,7 @@
     }
   },
   {
-    "id": 1118,
+    "id": 1136,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1736,7 +1988,7 @@
     }
   },
   {
-    "id": 1119,
+    "id": 1137,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1752,7 +2004,7 @@
     }
   },
   {
-    "id": 1120,
+    "id": 1138,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1768,7 +2020,7 @@
     }
   },
   {
-    "id": 1121,
+    "id": 1139,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1784,7 +2036,7 @@
     }
   },
   {
-    "id": 1122,
+    "id": 1140,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1800,7 +2052,7 @@
     }
   },
   {
-    "id": 1123,
+    "id": 1141,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1816,7 +2068,7 @@
     }
   },
   {
-    "id": 1124,
+    "id": 1142,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1832,7 +2084,7 @@
     }
   },
   {
-    "id": 1125,
+    "id": 1143,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1848,7 +2100,7 @@
     }
   },
   {
-    "id": 1126,
+    "id": 1144,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1864,7 +2116,7 @@
     }
   },
   {
-    "id": 1127,
+    "id": 1145,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1880,7 +2132,7 @@
     }
   },
   {
-    "id": 1128,
+    "id": 1146,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1896,7 +2148,7 @@
     }
   },
   {
-    "id": 1129,
+    "id": 1147,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1912,7 +2164,7 @@
     }
   },
   {
-    "id": 1130,
+    "id": 1148,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1928,7 +2180,7 @@
     }
   },
   {
-    "id": 1131,
+    "id": 1149,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1944,7 +2196,7 @@
     }
   },
   {
-    "id": 1132,
+    "id": 1150,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1960,7 +2212,7 @@
     }
   },
   {
-    "id": 1133,
+    "id": 1151,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1976,7 +2228,7 @@
     }
   },
   {
-    "id": 1134,
+    "id": 1152,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1992,7 +2244,7 @@
     }
   },
   {
-    "id": 1135,
+    "id": 1153,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2008,7 +2260,7 @@
     }
   },
   {
-    "id": 1136,
+    "id": 1154,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2024,7 +2276,7 @@
     }
   },
   {
-    "id": 1137,
+    "id": 1155,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2040,7 +2292,7 @@
     }
   },
   {
-    "id": 1138,
+    "id": 1156,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2056,7 +2308,7 @@
     }
   },
   {
-    "id": 1139,
+    "id": 1157,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2072,7 +2324,7 @@
     }
   },
   {
-    "id": 1140,
+    "id": 1158,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2088,7 +2340,7 @@
     }
   },
   {
-    "id": 1141,
+    "id": 1159,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2104,7 +2356,7 @@
     }
   },
   {
-    "id": 1142,
+    "id": 1160,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2120,7 +2372,7 @@
     }
   },
   {
-    "id": 1143,
+    "id": 1161,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2136,7 +2388,7 @@
     }
   },
   {
-    "id": 1144,
+    "id": 1162,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2152,7 +2404,7 @@
     }
   },
   {
-    "id": 1145,
+    "id": 1163,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2168,7 +2420,7 @@
     }
   },
   {
-    "id": 1146,
+    "id": 1164,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2184,7 +2436,7 @@
     }
   },
   {
-    "id": 1147,
+    "id": 1165,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2200,7 +2452,7 @@
     }
   },
   {
-    "id": 1148,
+    "id": 1166,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2216,7 +2468,7 @@
     }
   },
   {
-    "id": 1149,
+    "id": 1167,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2232,7 +2484,7 @@
     }
   },
   {
-    "id": 1150,
+    "id": 1168,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2248,7 +2500,7 @@
     }
   },
   {
-    "id": 1151,
+    "id": 1169,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2264,7 +2516,7 @@
     }
   },
   {
-    "id": 1152,
+    "id": 1170,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2280,7 +2532,7 @@
     }
   },
   {
-    "id": 1153,
+    "id": 1171,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2296,7 +2548,7 @@
     }
   },
   {
-    "id": 1154,
+    "id": 1172,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2312,7 +2564,7 @@
     }
   },
   {
-    "id": 1155,
+    "id": 1173,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2328,7 +2580,7 @@
     }
   },
   {
-    "id": 1156,
+    "id": 1174,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2344,7 +2596,7 @@
     }
   },
   {
-    "id": 1157,
+    "id": 1175,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2360,7 +2612,7 @@
     }
   },
   {
-    "id": 1158,
+    "id": 1176,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2376,7 +2628,7 @@
     }
   },
   {
-    "id": 1159,
+    "id": 1177,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2392,7 +2644,7 @@
     }
   },
   {
-    "id": 1160,
+    "id": 1178,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2408,7 +2660,7 @@
     }
   },
   {
-    "id": 1161,
+    "id": 1179,
     "priority": 50,
     "action": {
       "type": "redirect",

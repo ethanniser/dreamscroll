@@ -95,7 +95,9 @@ const destinations=[
   [{type:'personal',site:'x',action:'messages'},'https://x.com/i/chat'],
   [{type:'personal',site:'x',action:'compose'},'https://x.com/compose/post'],
   [{type:'personal',site:'instagram',action:'messages'},'https://www.instagram.com/direct/inbox/'],
-  [{type:'personal',site:'instagram',action:'notifications'},'https://www.instagram.com/?sf_personal=notifications']
+  [{type:'personal',site:'instagram',action:'notifications'},'https://www.instagram.com/?sf_personal=notifications'],
+  [{type:'personal',site:'x',action:'saved'},'https://x.com/i/bookmarks'],
+  [{type:'personal',site:'instagram',action:'saved'},'https://www.instagram.com/?sf_personal=saved']
 ];
 test('a tab-less main page opens each concrete destination in a new tab, and every destination passes its own check',async()=>{
   const h=harness();

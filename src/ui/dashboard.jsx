@@ -179,6 +179,7 @@ function Dashboard() {
           {tile('x', 'notifications', 'Notifications')}
           {tile('x', 'messages', 'Messages')}
           {tile('x', 'compose', 'Post')}
+          {tile('x', 'saved', 'Saved')}
         </div>
         {at('tiles-x')}
       </section>
@@ -188,6 +189,7 @@ function Dashboard() {
         <div className="tiles">
           {tile('instagram', 'notifications', 'Notifications')}
           {tile('instagram', 'messages', 'Messages')}
+          {tile('instagram', 'saved', 'Saved')}
         </div>
         {at('tiles-instagram')}
       </section>

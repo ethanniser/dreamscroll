@@ -88,6 +88,28 @@ test('videos inside a post stay visible; promoted posts (wrapped in placementTra
   dom.window.close();
 });
 
+test('Instagram Saved: the start page finds the signed-in username in the page data and goes to its saved page',async()=>{
+  const went=[];
+  const data='<script type="application/json">{"x":{"pk":"424242","username":"someone_else"},"y":{"id":"4242","username":"me.demo","full_name":"Me"}}</script>';
+  const {dom}=await fixture(`<head>${data}</head><body><main><article><a href="/someone_else/">someone_else</a></article></main></body>`,'https://www.instagram.com/?sf_personal=saved',{before(win){ win.document.cookie='ds_user_id=4242'; win.SocialContentHooks={replace:url=>went.push(url)}; }});
+  try {
+    await pause();
+    // Once, and to the signed-in user's page, not to an account whose id merely starts the same.
+    assert.deepEqual(went,['https://www.instagram.com/me.demo/saved/']);
+  } finally { dom.window.close(); }
+});
+test('saved pages show their own column: X Bookmarks and Instagram Saved',async()=>{
+  let r=await fixture(`<body><nav id="nav">Nav</nav><main>${column(tweet('5','Saved post'))}</main><aside id="side">Trends</aside></body>`,'https://x.com/i/bookmarks');
+  assert.equal(r.concealed(r.doc.getElementById('post-5')),false);
+  assert.equal(r.concealed(r.doc.getElementById('nav')),true);
+  assert.equal(r.concealed(r.doc.getElementById('side')),true);
+  r.dom.window.close();
+  r=await fixture('<body><nav id="nav">Nav</nav><main id="main"><div id="grid">Saved grid</div></main></body>','https://www.instagram.com/me.demo/saved/');
+  assert.equal(r.concealed(r.doc.getElementById('grid')),false);
+  assert.equal(r.concealed(r.doc.getElementById('nav')),true);
+  r.dom.window.close();
+});
+
 test('Instagram preserves native comments inside its permalink article and hides recommendations',async()=>{
   const {dom,doc,concealed,display}=await fixture('<body><main><article id="target"><a href="/p/AbC/">Post</a><img src="post.jpg"><ul id="comments"><li>A comment</li></ul><form id="composer">Reply</form></article><article id="recommended"><a href="/p/Other/">Recommended</a></article></main></body>','https://www.instagram.com/p/AbC/');
   try {

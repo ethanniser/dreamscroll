@@ -4,6 +4,10 @@ Notable changes to Dreamscroll. The format follows [Keep a Changelog](https://ke
 
 ## [Unreleased]
 
+### Added
+
+- **Saved posts:** a Saved tile for X (Bookmarks, including folders) and Instagram (Saved, including collections), in the extension and the iPhone app.
+
 ## [1.0.0] - 2026-11-07
 
 First public release.

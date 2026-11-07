@@ -68,13 +68,13 @@ test('both sites on one page: X and Instagram actions, no site switch', async ()
   assert.equal(document.querySelector('.seg'), null);
   assert.deepEqual([...document.querySelectorAll('.site-label')].map(h => h.textContent), ['X', 'Instagram']);
   assert.equal(document.getElementById('feed-panel').hidden, false);
-  for (const [site, action] of [['x','notifications'], ['x','compose'], ['instagram','messages']]) {
+  for (const [site, action] of [['x','notifications'], ['x','compose'], ['instagram','messages'], ['x','saved'], ['instagram','saved']]) {
     const before = calls.length;
     await until(() => !document.querySelector(`[data-site="${site}"][data-action="${action}"]`).disabled);
     document.querySelector(`[data-site="${site}"][data-action="${action}"]`).click();
     await until(() => calls.length > before);
   }
-  assert.deepEqual(calls, [{type:'personal', site:'x', action:'notifications'}, {type:'personal', site:'x', action:'compose'}, {type:'personal', site:'instagram', action:'messages'}]);
+  assert.deepEqual(calls, [{type:'personal', site:'x', action:'notifications'}, {type:'personal', site:'x', action:'compose'}, {type:'personal', site:'instagram', action:'messages'}, {type:'personal', site:'x', action:'saved'}, {type:'personal', site:'instagram', action:'saved'}]);
   dom.window.close();
 });
 
