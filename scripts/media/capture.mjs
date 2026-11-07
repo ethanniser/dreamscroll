@@ -79,10 +79,6 @@ for (const theme of ['dark', 'light']) {
   await shot(page, `search-${theme}.png`);
   await page.close();
 
-  // For You deck.
-  page = await open('feed.html', {theme, height: 560});
-  await shot(page, `feed-${theme}.png`);
-  await page.close();
 
   // Sync QR for the iPhone app (placeholder token).
   page = await open('blocked.html', {theme, height: 640});

@@ -8,10 +8,7 @@
 </p>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/media/feed-dark.png">
-    <img src="docs/media/feed-light.png" width="620" alt="The best of your For You feed, one post at a time, on Dreamscroll's own page">
-  </picture>
+  <img src="docs/media/cover.png" width="620" alt="Dreamscroll's main page: one search box, the For You batch, and shortcuts to notifications, messages, posting and saved posts on X and Instagram">
 </p>
 
 ## Why
