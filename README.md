@@ -2,15 +2,15 @@
 <h1 align="center">Dreamscroll</h1>
 
 <p align="center">
-  <b>Use X and Instagram on purpose.</b><br>
-  A Chrome extension and an iPhone app that hide the endless feeds, keep everything you actually came for,<br>
-  and give you a short batch of For You tweets every two hours instead of an infinite scroll.
+  <b>X and Instagram without the doom scroll.</b><br>
+  Just the things you came for: your messages, notifications, the people and posts you look up,<br>
+  and the best of your feed. No endless timeline, no distractions.
 </p>
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/media/swipe-dark.gif">
-    <img src="docs/media/swipe-light.gif" width="620" alt="The For You batch in Chrome: tweets shown one at a time, swiped left to mark read">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/feed-dark.png">
+    <img src="docs/media/feed-light.png" width="620" alt="The best of your For You feed, one post at a time, on Dreamscroll's own page">
   </picture>
 </p>
 
@@ -24,13 +24,26 @@ The top of your feed is the best of it. Dreamscroll gives you that part, so you 
 
 Dreamscroll sits between you and the feeds. Everything **deliberate** still works: messages, notifications, posting, profiles you look up, posts people send you, searches you type. Everything **ambient** (the home timeline, Explore, Reels, recommendation rails) is gone.
 
-For keeping up with what's going on, there's **For You, in batches**: Dreamscroll fetches the top 10 tweets X would have shown you (the best of your feed), and that's it for the next two hours. You go through them one at a time, like a deck of cards:
+To keep up with what's going on, you get **the top of your For You feed**: a short batch of the best posts X would have shown you, on a calm page of its own. Read through it, open anything worth a closer look on X, and when the batch is done, it's done. No pull-to-refresh, no "show more".
 
-- **Swipe left** (or ←) to mark a tweet read and move on.
-- **Swipe right** (or →) to open it on X with its replies. It's still there when you come back.
-- Read tweets are listed underneath if you want to go back to one.
+### On X, just what you came for
 
-When the batch is done, it's done. No pull-to-refresh, no "show more".
+<table>
+  <tr>
+    <td width="33%"><img src="docs/media/x-post.png" alt="A post on X with its replies, and nothing else around it"></td>
+    <td width="33%"><img src="docs/media/x-notifications.png" alt="X notifications without the sidebar, navigation or trends"></td>
+    <td width="33%"><img src="docs/media/x-compose.png" alt="The X composer on its own, with no feed behind it"></td>
+  </tr>
+  <tr>
+    <td><b>Posts and conversations</b>, without the sidebar, trends or "who to follow".</td>
+    <td><b>Notifications and messages</b>, and nothing to wander off into.</td>
+    <td><b>Writing a post</b> without a feed behind the box.</td>
+  </tr>
+</table>
+
+<sub>Names, posts and pictures in these screenshots are placeholders.</sub>
+
+### One place to start
 
 <table>
   <tr>
@@ -49,13 +62,13 @@ When the batch is done, it's done. No pull-to-refresh, no "show more".
   </tr>
   <tr>
     <td><b>One page instead of two feeds.</b> Visiting x.com or instagram.com (or clicking the toolbar icon) opens this page. Pick where you're going and you land right there.</td>
-    <td><b>One box for everything.</b> Type a name, a search or paste a link. Enter takes the first choice.</td>
+    <td><b>One box for everything.</b> Type a name, a search or paste a link.</td>
   </tr>
 </table>
 
 ## On your iPhone too
 
-The iPhone app is a small browser for X and Instagram with the same rules: you sign in inside the app, and only the parts you came for load. It also has the For You deck, a share target ("open this link in Dreamscroll" from any app), and an optional Safari blocker so the sites don't load in Safari.
+The iPhone app is a small browser for X and Instagram with the same rules: you sign in inside the app, and only the parts you came for load. It also has the For You batch, a share target ("open this link in Dreamscroll" from any app), and an optional Safari blocker so the sites don't load in Safari.
 
 <p align="center">
   <picture>
@@ -63,7 +76,10 @@ The iPhone app is a small browser for X and Instagram with the same rules: you s
     <img src="docs/media/iphone-dashboard-light.png" width="240" alt="The iPhone app's main screen">
   </picture>
   &nbsp;
-  <img src="docs/media/iphone-swipe.gif" width="240" alt="Swiping through the For You batch on iPhone">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/iphone-feed-dark.png">
+    <img src="docs/media/iphone-feed-light.png" width="240" alt="The For You batch on iPhone">
+  </picture>
   &nbsp;
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/iphone-settings-dark.png">
@@ -73,12 +89,12 @@ The iPhone app is a small browser for X and Instagram with the same rules: you s
 
 ## Features
 
-- **Feeds hidden, purpose kept.** Posts, threads, profiles, notifications, DMs, the composer and typed searches work normally. Home timelines, Explore, Reels, stories rails and "Who to follow" don't.
-- **For You batches.** 10 tweets, rendered on Dreamscroll's own page (text, links, previews, quotes, media thumbnails), refreshed at most every two hours.
-- **Swipe through them.** Drag, swipe, arrow keys or buttons. Undo, plus a list of what you've read.
+- **Feeds hidden, purpose kept.** Posts, threads, profiles, notifications, DMs, the composer and typed searches work normally. Home timelines, Explore, Reels, stories and "Who to follow" don't.
+- **The best of your feed, in batches.** A short batch of your top For You posts on Dreamscroll's own page, with links, previews, quotes and media. Then it's done for a while.
+- **Read at your pace.** Mark posts read as you go, open any of them on X, and find the ones you've read underneath.
 - **iPhone app** with in-app sign-in, a share extension and a Safari blocker.
-- **Optional sync** shares the batch between Chrome and your phone through a tiny server you run yourself (or [write yourself](docs/sync-api.md)). Set it up on the phone by scanning a QR code from the extension.
-- **No accounts, analytics or tracking.** Dreamscroll talks only to X and Instagram (as your browser would, including the hidden page load that fetches a batch) and, if you set up sync, to the sync server you choose. That server stores your current batch.
+- **Optional sync** shares the batch between your browser and your phone through a small server you run yourself (or [write yourself](docs/sync-api.md)). Set it up on the phone by scanning a QR code.
+- **No accounts, analytics or tracking.** Dreamscroll talks only to X and Instagram (as your browser would, including the hidden page load that fetches a batch) and, if you set up sync, to the sync server you choose.
 
 ## Install
 
@@ -128,7 +144,7 @@ bun install
 bun run test         # unit tests (needs uv for the regex check)
 bun run check        # syntax, generated rules and UI bundles are up to date
 bun run build:ui     # after editing src/ui (React + Base UI)
-bun run media        # regenerate the README screenshots (Chrome + ffmpeg)
+bun run media        # regenerate the extension screenshots (Chrome)
 ```
 
 Repository layout, conventions and the release process are in [AGENTS.md](AGENTS.md). Changes are listed in [CHANGELOG.md](CHANGELOG.md).

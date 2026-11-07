@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Dreamscroll",
-  "description": "Posts, profiles, notifications, messages and composing, without the endless home feed. A 10-tweet snapshot of For You every two hours.",
+  "description": "X and Instagram without the doom scroll: just what you came for, and the best of your feed.",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",

@@ -2,7 +2,7 @@
   "name": "dreamscroll",
   "version": "1.0.0",
   "private": true,
-  "description": "Use X and Instagram on purpose: a Chrome extension and an iPhone app that hide the endless feeds and give you a short For You batch instead.",
+  "description": "X and Instagram without the doom scroll: a Chrome extension and an iPhone app that keep what you came for and drop the endless feed.",
   "license": "MIT",
   "type": "module",
   "scripts": {

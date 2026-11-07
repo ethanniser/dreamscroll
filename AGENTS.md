@@ -31,7 +31,7 @@ bun run test         # extension tests; the regex check needs `uv`
 bun run check        # syntax, plus generated rules and UI bundles are current
 bun run build:rules  # after editing extension/policy.js
 bun run build:ui     # after editing src/ui/
-bun run media        # README screenshots/GIFs from the extension (Chrome + ffmpeg)
+bun run media        # README screenshots from the extension (Chrome)
 bun run media:ios    # the iPhone app in a Simulator with demo data (Xcode + xcodegen)
 bun run icons        # after editing assets/icon.svg or mark.svg (Chrome)
 

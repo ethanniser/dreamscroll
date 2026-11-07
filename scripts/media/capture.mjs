@@ -1,12 +1,10 @@
 // Regenerates the README screenshots and GIFs in docs/media from the real extension
 // pages, with made-up data (scripts/media/demo.mjs) and a mocked extension runtime.
 //
-//   bun run media                 # needs Google Chrome and ffmpeg
+//   bun run media                 # needs Google Chrome
 //   CHROME_PATH=/path/to/chrome bun run media
 import http from 'node:http';
-import {execFileSync} from 'node:child_process';
-import {mkdirSync, readFileSync, rmSync} from 'node:fs';
-import {tmpdir} from 'node:os';
+import {mkdirSync, readFileSync} from 'node:fs';
 import {join} from 'node:path';
 import puppeteer from 'puppeteer-core';
 import {DEMO_SYNC_LINK, demoState} from './demo.mjs';
@@ -69,29 +67,6 @@ async function shot(page, name, margin = 36) {
   await page.screenshot({path: join(OUT, name), clip: {x: 0, y, width: box.width, height: bottom - y}});
 }
 
-/** Records page activity to a GIF (Chrome screencast → ffmpeg, two-pass palette). */
-async function gif(page, name, act, width = 760) {
-  const dir = join(tmpdir(), `sf-media-${process.pid}`);
-  mkdirSync(dir, {recursive: true});
-  const webm = join(dir, `${name}.webm`);
-  const recorder = await page.screencast({path: webm});
-  await act(page);
-  await recorder.stop();
-  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', webm, '-vf',
-    `fps=20,scale=${width}:-1:flags=lanczos,split[a][b];[a]palettegen=stats_mode=diff:max_colors=128[p];[b][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle`,
-    '-loop', '0', join(OUT, name)]);
-  rmSync(dir, {recursive: true, force: true});
-}
-
-async function drag(page, dx, {steps = 18, ms = 450, release = true} = {}) {
-  const box = await (await page.$('.deck-slot.top')).boundingBox();
-  const x = box.x + box.width / 2, y = box.y + Math.min(box.height / 2, 120);
-  await page.mouse.move(x, y);
-  await page.mouse.down();
-  for (let i = 1; i <= steps; i++) { await page.mouse.move(x + (dx * i) / steps, y + (i * 6) / steps); await pause(ms / steps); }
-  if (release) await page.mouse.up();
-}
-
 for (const theme of ['dark', 'light']) {
   // Main page.
   let page = await open('blocked.html', {theme, height: 640});
@@ -106,21 +81,7 @@ for (const theme of ['dark', 'light']) {
 
   // For You deck.
   page = await open('feed.html', {theme, height: 560});
-  await gif(page, `swipe-${theme}.gif`, async page => {
-    await pause(700);
-    await drag(page, -320);                      // drag left: read
-    await pause(900);
-    await page.keyboard.press('ArrowLeft');       // ← key: read
-    await pause(900);
-    await drag(page, 150, {release: false});      // drag right: open (shows the hint)
-    await pause(350);
-    await page.mouse.up();
-    await pause(900);
-    await page.click('.read-trigger');            // the read list
-    await pause(500);
-    await page.evaluate(() => window.scrollTo({top: 260, behavior: 'smooth'}));
-    await pause(1300);
-  });
+  await shot(page, `feed-${theme}.png`);
   await page.close();
 
   // Sync QR for the iPhone app (placeholder token).
