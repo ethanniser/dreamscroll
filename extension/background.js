@@ -11,7 +11,7 @@ const serial = task => { const next = queue.then(task); queue = next.catch(() =>
 async function validateRules(rules) {
   for (const rule of rules) {
     const result = await dnr.isRegexSupported({regex:rule.condition.regexFilter,isCaseSensitive:true,requireCapturing:false});
-    if (!result.isSupported) throw Error(`Chrome cannot compile a focus rule (${result.reason || 'unsupported regex'}).`);
+    if (!result.isSupported) throw Error(`Chrome cannot compile rule ${rule.id} (${result.reason || 'unsupported regex'}): ${rule.condition.regexFilter.slice(0, 120)}`);
   }
 }
 function allowed(url) {
