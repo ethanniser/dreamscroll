@@ -1,0 +1,24 @@
+/* Gate unapproved documents, then preserve the site's native conversation layout. */
+/* Never display:none the page while it boots. X derives its request signature at
+   start-up from a paused animation's computed transform; without a layout box that
+   reads "none", the signature is wrong, and search (which checks it) returns 404.
+   So: invisible while loading, opaque overlay when no view is found, and empty
+   top-level elements (which show nothing) keep their box. */
+html:not([data-sf-ready]) body { opacity: 0 !important; pointer-events: none !important; }
+[data-sf-path]:not(body) > :not([data-sf-path]):not([data-sf-target]):not([data-sf-overlay]):not(#sf-empty):not(#sf-feed-pill),
+body[data-sf-path] > :not([data-sf-path]):not([data-sf-target]):not([data-sf-overlay]):not(#sf-empty):not(#sf-feed-pill):not(:empty) { display: none !important; }
+/* Only the outer shell is resized. Never change tweet cells or virtual-list geometry. */
+[data-sf-path] { width: 100% !important; min-width: 0 !important; max-width: none !important; margin-inline: auto !important; }
+main[data-sf-path] { align-items: center !important; }
+html[data-sf-site="x"] [data-sf-target] { width: min(100%, 600px) !important; max-width: 600px !important; min-width: 0 !important; margin-inline: auto !important; flex-grow: 0 !important; }
+html[data-sf-site="instagram"] [data-sf-target] { width: 100% !important; max-width: 1100px !important; margin-inline: auto !important; }
+/* Promoted posts are wrapped in placementTracking; so are video players inside a post, which stay. */
+[data-sf-notes], [data-sf-hidden], [data-sf-target] [data-testid="placementTracking"]:not(article [data-testid="placementTracking"]) { display: none !important; }
+/* Back is only hidden where it would lead to a feed; DMs and the composer need it. */
+html:is([data-sf-view="post"],[data-sf-view="profile"],[data-sf-view="search"]) [data-sf-target] [data-testid="app-bar-back"] { display: none !important; }
+
+/* Keep inbox + conversation panes together, and native composer dialogs usable. */
+html[data-sf-view="messages"] [data-sf-target] { width: min(100%, 1100px) !important; max-width: 1100px !important; }
+html[data-sf-view="compose"] [data-sf-target] { width: min(calc(100vw - 32px), 600px) !important; max-width: 600px !important; }
+/* Instagram's notification side panel is position:fixed at the nav edge: center it in flow. */
+html[data-sf-site="instagram"][data-sf-panel] [data-sf-target] { position: relative !important; inset: auto !important; transform: none !important; width: fit-content !important; max-width: 100% !important; margin-inline: auto !important; }

@@ -1,0 +1,92 @@
+.feed-body { min-height: 100vh; background: var(--bg); overflow-x: hidden; }
+.feed { width: min(100%, 600px); margin: 0 auto; padding: 32px 16px 64px; }
+.feed-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 4px 18px; }
+.brand { white-space: nowrap; flex: none; display: flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 650; }
+.brand .mark { width: 20px; height: 20px; color: var(--accent); }
+.feed-meta { font-size: 12px; font-weight: 400; letter-spacing: normal; color: var(--muted); text-align: right; }
+.tweets { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.entry { border: 1px solid var(--line); border-radius: 14px; background: var(--field); }
+.entry:hover { border-color: var(--edge); }
+.tweet { padding: 14px 16px; cursor: pointer; position: relative; }
+.thread .tweet + .tweet { padding-top: 6px; }
+/* A conversation: a line joins the avatars of the root and its replies. */
+.thread .tweet:not(:last-child)::after { content: ''; position: absolute; left: 35px; top: 58px; bottom: -4px; width: 2px; background: var(--line); }
+.reposted { font-size: 12px; color: var(--muted); margin: 0 0 8px 50px; overflow-wrap: anywhere; }
+.byline { display: flex; gap: 10px; align-items: center; }
+.byline.small { gap: 6px; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; flex: none; display: grid; place-items: center; overflow: hidden; background: var(--line); }
+.avatar-img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-fallback { font-size: 15px; font-weight: 650; color: var(--muted); }
+.who { display: flex; flex-wrap: wrap; gap: 0 6px; align-items: baseline; min-width: 0; }
+.name { font-size: 14px; font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+.time { font-size: 13px; color: var(--muted); text-decoration: none; }
+.time:hover { text-decoration: underline; }
+.replying { margin: 4px 0 0 50px; font-size: 13px; color: var(--muted); }
+.verified { margin-left: 4px; font-size: 11px; color: var(--accent); }
+.handle { font-size: 13px; color: var(--muted); }
+.text { margin: 8px 0 0 50px; font-size: 15px; line-height: 1.5; color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+.inline-link { color: var(--accent); text-decoration: none; }
+.inline-link:hover { text-decoration: underline; }
+.media { margin: 10px 0 0 50px; display: grid; gap: 3px; border-radius: 12px; overflow: hidden; }
+.media-2, .media-4 { grid-template-columns: 1fr 1fr; }
+.media-3 { grid-template-columns: 1fr 1fr; }
+.media-3 .media-item:first-child { grid-row: span 2; }
+.media-item { position: relative; background: var(--line); }
+.media-img { display: block; width: 100%; height: 100%; max-height: 420px; object-fit: cover; }
+.media-2 .media-img, .media-3 .media-img, .media-4 .media-img { aspect-ratio: 1; }
+.sensitive .media-img { filter: blur(28px); }
+.sensitive { overflow: hidden; }
+.sensitive-label { position: absolute; inset: 0; display: grid; place-items: center; font-size: 13px; font-weight: 600; color: #fff; text-shadow: 0 1px 4px #000; }
+.play { position: absolute; left: 10px; bottom: 10px; padding: 4px 9px; border-radius: 999px; background: #000b; color: #fff; font-size: 12px; font-weight: 700; }
+.card { display: block; margin: 10px 0 0 50px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; color: inherit; text-decoration: none; }
+.card:hover { border-color: var(--edge); }
+.card-img { display: block; width: 100%; max-height: 300px; object-fit: cover; background: var(--line); }
+.card-body { display: grid; gap: 2px; padding: 10px 12px; }
+.card-domain { font-size: 12px; color: var(--muted); }
+.card-title { font-size: 14px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.card-desc { font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.quoted { display: block; margin: 10px 0 0 50px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; color: inherit; cursor: pointer; }
+.quoted:hover { border-color: var(--edge); }
+.quoted-text { margin: 4px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+.quoted-img { display: block; margin-top: 8px; width: 100%; max-height: 220px; object-fit: cover; border-radius: 8px; }
+.feed-end { display: block; margin-top: 26px; padding: 0; border: 0; text-align: center; font-size: 13px; color: var(--muted); }
+.feed-end p { margin: 0 0 8px; }
+.feed-end .quiet { font-size: 13px; }
+.feed #message { text-align: center; }
+@media (max-width: 480px) {
+  .text, .media, .card, .quoted, .replying { margin-left: 0; }
+  .thread .tweet:not(:last-child)::after { display: none; }
+  .reposted { margin-left: 0; }
+}
+
+/* Swipe deck: one tweet (or conversation) at a time. */
+.deck { margin-top: 4px; }
+.deck-stack { position: relative; }
+.deck-slot { position: relative; transition: transform .2s ease, opacity .2s ease; }
+.deck-slot.top { z-index: 1; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; cursor: grab; }
+.deck-slot.dragging { transition: none; cursor: grabbing; }
+/* The next card peeks out from under the current one, clipped to its size. */
+.deck-slot.under { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.deck-slot.under .deck-card { height: 100%; overflow: hidden; }
+/* Only its edge shows until you drag the top card away. */
+.deck-slot.under .deck-card > * { opacity: var(--reveal, 0); }
+/* pan-y here too: the card scrolls, and touch-action stops at the nearest scroll container. */
+.deck-card { touch-action: pan-y; max-height: calc(100dvh - 230px); min-height: 180px; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: 18px; background: var(--field); box-shadow: 0 6px 22px #00000014; }
+.deck-card img { -webkit-user-drag: none; }
+.hint { position: absolute; top: 18px; padding: 4px 10px; border: 2px solid; border-radius: 8px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; pointer-events: none; background: var(--field); }
+.hint-read { right: 18px; color: var(--muted); }
+.hint-open { left: 18px; color: var(--accent); }
+.deck-actions { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+.swipe-button { min-width: 120px; padding: 11px 18px; border: 1px solid var(--edge); border-radius: 999px; background: var(--field); font-size: 14px; font-weight: 600; }
+.swipe-button:hover { background: var(--hover); }
+#open-button { border-color: transparent; background: var(--accent); color: var(--on-accent); }
+#open-button:hover { opacity: .92; }
+.deck-help { display: flex; justify-content: center; align-items: center; gap: 14px; min-height: 30px; margin: 8px 0 0; font-size: 12px; color: var(--faint); }
+.deck-help .quiet { font-size: 12px; padding: 0; }
+@media (hover: none) { .keys { display: none; } }
+
+/* Read tweets, below the deck. */
+.read { margin-top: 34px; }
+.read-trigger { display: block; margin: 0 auto 12px; border: 0; padding: 4px 0; background: none; font-size: 13px; color: var(--muted); }
+.read-trigger:hover { color: var(--ink); }
+.put-back { display: block; margin: 0 16px 10px auto; font-size: 12px; }

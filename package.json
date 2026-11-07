@@ -1,0 +1,30 @@
+{
+  "name": "dreamscroll",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Use X and Instagram on purpose: a Chrome extension and an iPhone app that hide the endless feeds and give you a short For You batch instead.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js && uv run scripts/check-regex.py",
+    "check": "node --check extension/background.js && node --check extension/feed.js && node --check extension/timeline.js && node --check extension/capture-main.js && node --check extension/feed-page.js && node --check extension/content.js && node --check extension/popup.js && bun scripts/build-rules.mjs --check && bun scripts/build-ui.mjs --check",
+    "build:rules": "bun scripts/build-rules.mjs",
+    "build:ui": "bun scripts/build-ui.mjs",
+    "media": "bun scripts/media/capture.mjs",
+    "media:ios": "bun scripts/media/simulator.mjs",
+    "set-version": "bun scripts/version.mjs",
+    "icons": "bun scripts/make-icons.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "jsdom": "^31.0.0",
+    "puppeteer-core": "25.16.0"
+  },
+  "dependencies": {
+    "@base-ui/react": "1.9.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "uqr": "0.1.2"
+  },
+  "packageManager": "bun@1.3.14"
+}

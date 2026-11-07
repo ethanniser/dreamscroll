@@ -1,0 +1,13 @@
+// Build settings for your own copy. Don't edit this file: put your values in
+// Local.xcconfig next to it (git-ignored), e.g.
+//
+//   DEVELOPMENT_TEAM = ABCDE12345
+//   BUNDLE_ID_PREFIX = com.yourname
+//
+// The app is $(BUNDLE_ID_PREFIX).dreamscroll, its extensions .share and .blocker,
+// and the App Group they share is group.$(BUNDLE_ID_PREFIX).dreamscroll.
+
+DEVELOPMENT_TEAM =
+BUNDLE_ID_PREFIX = com.example
+
+#include? "Local.xcconfig"

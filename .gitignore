@@ -1,0 +1,4 @@
+node_modules/
+.preview/
+extension/_metadata/
+.DS_Store

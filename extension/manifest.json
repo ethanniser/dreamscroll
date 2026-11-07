@@ -1,0 +1,89 @@
+{
+  "manifest_version": 3,
+  "name": "Dreamscroll",
+  "description": "Posts, profiles, notifications, messages and composing, without the endless home feed. A 10-tweet snapshot of For You every two hours.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "version": "1.0.0",
+  "minimum_chrome_version": "120",
+  "permissions": [
+    "declarativeNetRequestWithHostAccess",
+    "storage",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://*.x.com/*",
+    "*://*.twitter.com/*",
+    "*://*.instagram.com/*"
+  ],
+  "optional_host_permissions": [
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Dreamscroll",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "default_block",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.x.com/*",
+        "*://*.twitter.com/*",
+        "*://*.instagram.com/*"
+      ],
+      "js": [
+        "policy.js",
+        "timeline.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://x.com/home*"
+      ],
+      "js": [
+        "capture-main.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "blocked.html",
+        "popup.css",
+        "popup.js",
+        "policy.js"
+      ],
+      "matches": [
+        "*://*.x.com/*",
+        "*://*.twitter.com/*",
+        "*://*.instagram.com/*"
+      ]
+    }
+  ]
+}

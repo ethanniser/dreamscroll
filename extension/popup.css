@@ -1,0 +1,103 @@
+/* Dreamscroll — main page and shared tokens (the feed page uses these too). */
+:root {
+  color-scheme: light dark;
+  --ink: #16201c;
+  --muted: #6b7570;
+  --faint: #9aa29e;
+  --bg: #f7f7f4;
+  --field: #ffffff;
+  --line: #e3e5e0;
+  --edge: #cfd4cc;
+  --hover: #eff1ec;
+  --accent: #234e3d;
+  --on-accent: #ffffff;
+  --focus: #3f7a5c;
+  --error: #a3392b;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8ebe8;
+    --muted: #98a29d;
+    --faint: #6d7671;
+    --bg: #121514;
+    --field: #1a1e1c;
+    --line: #262b29;
+    --edge: #343b38;
+    --hover: #1f2422;
+    --accent: #8cc4a2;
+    --on-accent: #0f1a15;
+    --focus: #8cc4a2;
+    --error: #f0a092;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; color: var(--ink); background: var(--bg); }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { opacity: .5; cursor: default; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+[hidden] { display: none !important; }
+#message { margin: 8px 2px 0; font-size: 13px; line-height: 1.4; color: var(--error); }
+#message:empty { display: none; }
+.quiet { border: 0; padding: 6px 0; background: none; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.quiet:hover { color: var(--ink); }
+
+/* Main page */
+.app { width: min(100%, 480px); margin: 0 auto; padding: 14vh 20px 40px; }
+main[aria-busy="true"] { cursor: progress; }
+.bar { display: flex; align-items: center; margin-bottom: 18px; }
+.brand { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 650; }
+.mark { width: 20px; height: 20px; flex: none; color: var(--accent); }
+.go input { width: 100%; padding: 13px 14px; border: 1px solid var(--edge); border-radius: 12px; background: var(--field); font-size: 15px; outline: none; }
+.go input:focus { border-color: var(--focus); }
+/* Base UI Autocomplete: the positioner sits in a portal, sized to the input. */
+.suggestions-positioner { z-index: 10; width: var(--anchor-width); outline: 0; }
+.suggestions { padding: 4px; border: 1px solid var(--edge); border-radius: 12px; background: var(--field); box-shadow: 0 8px 24px #0000001f; outline: 0; }
+.suggestions [role="listbox"] { display: grid; outline: 0; }
+.suggestion { padding: 10px 12px; border-radius: 8px; font-size: 14px; cursor: pointer; user-select: none; }
+.suggestion[data-highlighted] { background: var(--hover); }
+.suggestion[data-disabled] { opacity: .5; cursor: default; }
+.go input::placeholder { color: var(--faint); }
+
+.site { margin-top: 26px; }
+.site-label { margin: 0 2px 8px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.foryou { display: flex; align-items: stretch; gap: 8px; margin-bottom: 8px; }
+.foryou-open { flex: 1; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 14px; border: 0; border-radius: 12px; background: var(--accent); color: var(--on-accent); text-align: left; }
+.foryou-title { font-size: 15px; font-weight: 650; }
+.foryou-status { font-size: 13px; opacity: .8; white-space: nowrap; }
+
+.tiles { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; }
+.tiles button { padding: 13px 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--field); font-size: 14px; font-weight: 550; }
+.tiles button:hover { background: var(--hover); border-color: var(--edge); }
+
+.sync { margin-top: 40px; font-size: 13px; color: var(--muted); }
+.sync-trigger { border: 0; padding: 0; background: none; color: inherit; font-size: inherit; }
+.sync-trigger:hover { color: var(--ink); }
+.sync-badge { margin-left: 4px; color: var(--faint); }
+.sync-status { display: grid; gap: 8px; margin-top: 12px; }
+.sync-line { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+.sync-line b { font-weight: 600; }
+.sync-error { margin: 0; color: var(--error); line-height: 1.4; }
+.sync-status .sync-actions button:not(.quiet) { padding: 8px 14px; border: 1px solid var(--edge); border-radius: 10px; background: var(--field); font-size: 13px; }
+.sync form { display: grid; gap: 8px; margin-top: 12px; }
+.sync input { padding: 10px 12px; border: 1px solid var(--edge); border-radius: 10px; background: var(--field); font-size: 13px; }
+.sync-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.sync-actions button[type="submit"] { padding: 8px 14px; border: 1px solid var(--edge); border-radius: 10px; background: var(--field); font-size: 13px; }
+
+@media (max-width: 420px) {
+  .app { padding-top: 28px; }
+}
+
+/* Sync QR dialog (Base UI Dialog) */
+.dialog-backdrop { position: fixed; inset: 0; background: #0008; }
+.dialog { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(calc(100vw - 32px), 340px); display: grid; gap: 10px; justify-items: center; padding: 22px 20px 16px; border: 1px solid var(--edge); border-radius: 16px; background: var(--field); text-align: center; outline: 0; }
+.dialog-title { margin: 0; font-size: 16px; font-weight: 650; }
+.dialog-text { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
+.dialog-warning { color: var(--faint); font-size: 12px; }
+.dialog-error { color: var(--error); }
+.qr { width: 220px; height: 220px; border-radius: 8px; }
+.qr-empty { display: grid; place-items: center; background: var(--hover); font-size: 13px; color: var(--muted); }
+.dialog-close { margin-top: 4px; padding: 8px 18px; border: 1px solid var(--edge); border-radius: 10px; background: none; font-size: 13px; }
+.dialog-close:hover { background: var(--hover); }

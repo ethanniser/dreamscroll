@@ -1,0 +1,24 @@
+{
+  "name": "dreamscroll-sync",
+  "private": true,
+  "description": "Optional sync for Dreamscroll: a Convex component (and a ready-to-deploy Convex app) that shares the For You batch between your browser and iPhone.",
+  "type": "module",
+  "scripts": {
+    "dev": "convex dev",
+    "deploy": "convex deploy",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p convex"
+  },
+  "dependencies": {
+    "convex": "1.46.0"
+  },
+  "devDependencies": {
+    "@edge-runtime/vm": "5.0.0",
+    "@types/node": "22.19.1",
+    "convex-test": "0.0.61",
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
+  },
+  "version": "1.0.0",
+  "packageManager": "bun@1.3.14"
+}

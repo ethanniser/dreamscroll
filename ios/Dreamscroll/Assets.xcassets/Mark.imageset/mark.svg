@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <!-- The Dreamscroll mark: a sleeping crescent and a sparkle (one color, for UI). -->
+  <defs>
+    <mask id="m"><rect width="24" height="24" fill="#fff"/><circle cx="15.5" cy="8" r="6.6" fill="#000"/></mask>
+  </defs>
+  <circle cx="11" cy="13" r="8.5" fill="#000000" mask="url(#m)"/>
+  <path d="M19 15.2c.25 1.35.55 1.65 1.9 1.9-1.35.25-1.65.55-1.9 1.9-.25-1.35-.55-1.65-1.9-1.9 1.35-.25 1.65-.55 1.9-1.9Z" fill="#000000"/>
+</svg>
