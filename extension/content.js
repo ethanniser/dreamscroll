@@ -319,6 +319,12 @@
         if (column) { conversation = column; conversationKey = view.post.key; }
         // Preserve the verified conversation while the root post virtualizes away.
         candidate = conversation?.isConnected && conversationKey === view.post.key ? conversation : null;
+        // A deleted, protected or suspended post: X shows its own notice (an article that isn't a
+        // tweet) and no posts at all, so show that column rather than our "not available" cover.
+        if (!candidate) {
+          const only = document.querySelector('[data-testid="primaryColumn"]');
+          if (only && !only.querySelector('article[data-testid="tweet"]') && only.querySelector('article:not([data-testid])')) candidate = only;
+        }
       }
     }
     if (approved !== view) return; // A newer check took over; it will isolate again.

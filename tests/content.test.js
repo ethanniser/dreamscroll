@@ -86,6 +86,16 @@ test('an edited post is found by its timestamp, which links to its edit history'
   } finally { dom.window.close(); }
 });
 
+test('a post X can\'t show (suspended, deleted) shows X\'s own notice, not our cover',async()=>{
+  const notice='<div data-testid="cellInnerDiv"><article id="tombstone"><span>This Post is from a suspended account.</span> <a href="https://help.x.com/rules-and-policies/notices-on-x">Learn more</a></article></div>';
+  const {dom,doc,concealed}=await fixture(`<body><nav id="nav">Nav</nav><main>${column(notice)}</main></body>`,'https://x.com/gone/status/123');
+  try {
+    assert.equal(concealed(doc.getElementById('tombstone')),false);
+    assert.equal(doc.getElementById('sf-empty'),null);
+    assert.equal(concealed(doc.getElementById('nav')),true);
+  } finally { dom.window.close(); }
+});
+
 test('videos inside a post stay visible; promoted posts (wrapped in placementTracking) are hidden',async()=>{
   // Live x.com (2026-11): X wraps a post's video player in placementTracking too.
   const post='<article data-testid="tweet" id="focal"><a href="/alice/status/123"><time>now</time></a><div data-testid="tweetPhoto"><div data-testid="placementTracking" id="video-wrap"><div data-testid="videoPlayer" id="video">video</div></div></div></article>';
