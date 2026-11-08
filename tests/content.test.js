@@ -98,6 +98,18 @@ test('a post X can\'t show (suspended, deleted) shows X\'s own notice, not our c
   } finally { dom.window.close(); }
 });
 
+test('a deleted post shows X\'s "doesn\'t exist" message, not our cover',async()=>{
+  // Live x.com (2026-11): no article, just the column's error-detail.
+  const error='<div aria-label="Home timeline"><div data-testid="error-detail" id="error"><span>Hmm...this page doesn’t exist. Try searching for something else.</span></div></div>';
+  const {dom,doc,concealed}=await fixture(`<body><nav id="nav">Nav</nav><main><div data-testid="primaryColumn">${error}</div><aside id="side">Trends</aside></main></body>`,'https://x.com/gone/status/123');
+  try {
+    assert.equal(concealed(doc.getElementById('error')),false);
+    assert.equal(doc.getElementById('sf-empty'),null);
+    assert.equal(concealed(doc.getElementById('nav')),true);
+    assert.equal(concealed(doc.getElementById('side')),true);
+  } finally { dom.window.close(); }
+});
+
 test('videos inside a post stay visible; promoted posts (wrapped in placementTracking) are hidden',async()=>{
   // Live x.com (2026-11): X wraps a post's video player in placementTracking too.
   const post='<article data-testid="tweet" id="focal"><a href="/alice/status/123"><time>now</time></a><div data-testid="tweetPhoto"><div data-testid="placementTracking" id="video-wrap"><div data-testid="videoPlayer" id="video">video</div></div></div></article>';

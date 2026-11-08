@@ -319,11 +319,13 @@
         if (column) { conversation = column; conversationKey = view.post.key; }
         // Preserve the verified conversation while the root post virtualizes away.
         candidate = conversation?.isConnected && conversationKey === view.post.key ? conversation : null;
-        // A deleted, protected or suspended post: X shows its own notice (an article that isn't a
-        // tweet) and no posts at all, so show that column rather than our "not available" cover.
+        // A post X can't show, and no posts at all: show X's own notice rather than our
+        // "not available" cover. A suspended or protected author's post is an article that
+        // isn't a tweet; a deleted post is the column's "this page doesn't exist" error-detail
+        // (live 2026-11).
         if (!candidate) {
           const only = document.querySelector('[data-testid="primaryColumn"]');
-          if (only && !only.querySelector('article[data-testid="tweet"]') && only.querySelector('article:not([data-testid])')) candidate = only;
+          if (only && !only.querySelector('article[data-testid="tweet"]')) candidate = only.querySelector('article:not([data-testid])') ? only : only.querySelector('[data-testid="error-detail"]');
         }
       }
     }

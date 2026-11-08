@@ -12,6 +12,10 @@ Notable changes to Dreamscroll. The format follows [Keep a Changelog](https://ke
 
 - Instagram Notifications and Saved open on a plain `instagram.com/` address, with no `?sf_personal=` marker for Instagram to see.
 
+### Fixed
+
+- A deleted post shows X's own "this page doesn't exist" message instead of Dreamscroll's "not available" cover.
+
 ## [1.0.0] - 2026-11-07
 
 First public release.
