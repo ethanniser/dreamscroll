@@ -9,6 +9,8 @@ const css = await readFile(new URL('../extension/content.css',import.meta.url),'
 const pause = () => new Promise(resolve=>setTimeout(resolve,80));
 const tweet = (id='123', text='Selected post') => `<article data-testid="tweet" id="post-${id}"><a href="/alice/status/${id}"><time>now</time></a><p>${text}</p></article>`;
 const column = contents => `<div data-testid="primaryColumn" id="conversation">${contents}</div>`;
+// The worker's reply in a tab it opened for an Instagram start page (Notifications panel, Saved).
+const startReply=action=>win=>({allowed:true,post:null,view:{...win.SocialPolicy.startViews.instagram[action]}});
 async function fixture(html, url, {fail=false, geometry=false, before, reply}={}) {
   const errors=[], virtualConsole=new VirtualConsole();
   virtualConsole.on('jsdomError',error=>{ if (!/navigation/i.test(error.message)) errors.push(error); });
@@ -110,7 +112,7 @@ test('videos inside a post stay visible; promoted posts (wrapped in placementTra
 test('Instagram Saved: the start page finds the signed-in username in the page data and goes to its saved page',async()=>{
   const went=[];
   const data='<script type="application/json">{"x":{"pk":"424242","username":"someone_else"},"y":{"id":"4242","username":"me.demo","full_name":"Me"}}</script>';
-  const {dom}=await fixture(`<head>${data}</head><body><main><article><a href="/someone_else/">someone_else</a></article></main></body>`,'https://www.instagram.com/?sf_personal=saved',{before(win){ win.document.cookie='ds_user_id=4242'; win.SocialContentHooks={replace:url=>went.push(url)}; }});
+  const {dom}=await fixture(`<head>${data}</head><body><main><article><a href="/someone_else/">someone_else</a></article></main></body>`,'https://www.instagram.com/',{reply:startReply('saved'),before(win){ win.document.cookie='ds_user_id=4242'; win.SocialContentHooks={replace:url=>went.push(url)}; }});
   try {
     await pause();
     // Once, and to the signed-in user's page, not to an account whose id merely starts the same.
@@ -267,9 +269,15 @@ test('compose route stays hidden while only the background inline composer exist
   try { assert.equal(doc.querySelector('[data-sf-target]'),null); assert.ok(concealed(doc.querySelector('#feed'))); }finally{dom.window.close();}
 });
 
+test('a start view is honored only on Instagram home',async()=>{
+  for (const url of ['https://www.instagram.com/explore/','https://x.com/home']) {
+    const {dom,doc,concealed}=await fixture('<body><main id="feed">Feed</main></body>',url,{reply:startReply('notifications')});
+    try { assert.equal(dom.window.location.href,url); assert.ok(concealed(doc.getElementById('feed')),url); assert.equal(doc.querySelector('[data-sf-target]'),null); } finally { dom.window.close(); }
+  }
+});
 test('Instagram personal notifications activate native hash-link panel without exposing home',async()=>{
   let clicks=0;
-  const {dom,doc,concealed,display}=await fixture('<body><nav><a href="#" id="trigger">NotificationsNotifications</a></nav><main id="feed">Home feed</main></body>','https://www.instagram.com/?sf_personal=notifications',{before(win){
+  const {dom,doc,concealed,display}=await fixture('<body><nav><a href="#" id="trigger">NotificationsNotifications</a></nav><main id="feed">Home feed</main></body>','https://www.instagram.com/',{reply:startReply('notifications'),before(win){
     win.document.querySelector('#trigger').addEventListener('click',event=>{
       event.preventDefault(); clicks++;
       const panel=win.document.createElement('div');panel.id='activity';panel.setAttribute('role','dialog');panel.textContent='Notifications: a reply';win.document.body.append(panel);
@@ -413,7 +421,7 @@ test('Instagram notification trigger that fires popstate synchronously does not 
   // Chrome fires popstate synchronously for href="#" fragment navigation, re-entering check()
   // from inside isolate(). Live crash: "Cannot read properties of null (reading 'kind')".
   let clicks=0;
-  const {dom,doc,concealed,errors,display}=await fixture('<body><nav><a href="#" id="trigger">Notifications</a></nav><main id="feed">Home feed</main></body>','https://www.instagram.com/?sf_personal=notifications',{before(win){
+  const {dom,doc,concealed,errors,display}=await fixture('<body><nav><a href="#" id="trigger">Notifications</a></nav><main id="feed">Home feed</main></body>','https://www.instagram.com/',{reply:startReply('notifications'),before(win){
     win.document.querySelector('#trigger').addEventListener('click',()=>{
       clicks++;
       win.history.pushState({},'',win.location.href.replace(/#.*$/,'')+'#');
@@ -439,7 +447,7 @@ test('live-shaped Instagram notification panel: early click retried, fixed conta
   // Shape observed on instagram.com: shell(main + nav) > fixed > relative > absolute > 460px > ... > heading.
   let clicks=0;
   const html=`<body><div id="shell"><nav id="nav"><a href="/">Home</a><a href="#" id="trigger"><svg aria-label="Notifications"></svg>Notifications</a><a href="/explore/">Explore</a></nav><main id="feed"><article>Feed post</article></main></div></body>`;
-  const {dom,doc,concealed,errors,display}=await fixture(html,'https://www.instagram.com/?sf_personal=notifications',{before(win){
+  const {dom,doc,concealed,errors,display}=await fixture(html,'https://www.instagram.com/',{reply:startReply('notifications'),before(win){
     win.document.querySelector('#trigger').addEventListener('click',event=>{
       event.preventDefault(); clicks++;
       if (clicks===1) return; // not hydrated yet: the first click is lost

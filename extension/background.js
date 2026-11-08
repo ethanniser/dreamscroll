@@ -23,19 +23,22 @@ function allowed(url) {
 // on the extension's own feed page, the same for 2 hours. Home itself stays blocked
 // unless a tab holds a grant: 'capture' (the hidden window) or 'unlocked' (spends the
 // daily budget). A grant is a tab-scoped session rule letting x.com/home load there only.
+// A 'start' grant does the same for instagram.com/ in a tab opened for Instagram's
+// Notifications panel or Saved (P.startViews), so their URL needs no marker.
 const FEED_HOME = /^https:\/\/x\.com\/(?:home\/?)?(?:[?#]|$)/;
-const feedRule = (tabId, id) => ({id, priority:30, action:{type:'allow'}, condition:{regexFilter:'^https://x\\.com/(?:home/?)?(?:[?#]|$)', isUrlFilterCaseSensitive:true, tabIds:[tabId], resourceTypes:['main_frame']}});
+const homeFilter = mode => mode === 'start' ? '^https://(?:www\\.)?instagram\\.com/(?:[?#]|$)' : '^https://x\\.com/(?:home/?)?(?:[?#]|$)';
+const feedRule = (tabId, id, mode) => ({id, priority:30, action:{type:'allow'}, condition:{regexFilter:homeFilter(mode), isUrlFilterCaseSensitive:true, tabIds:[tabId], resourceTypes:['main_frame']}});
 let grants = null, grantsLoad = null;
 async function loadGrants() {
   grantsLoad ||= chrome.storage.session.get('grants').catch(() => ({})).then(stored => { grants ||= stored.grants || {}; return grants; });
   return grantsLoad;
 }
 const saveGrants = () => chrome.storage.session.set({grants}).catch(() => {});
-async function grant(tabId, mode, day = null) {
+async function grant(tabId, mode, day = null, view = null) {
   const all = await loadGrants();
   const ruleId = all[tabId]?.ruleId ?? 100000 + (Object.values(all).reduce((max, g) => Math.max(max, g.ruleId - 100000), 0) + 1);
-  await dnr.updateSessionRules({removeRuleIds:[ruleId], addRules:[feedRule(tabId, ruleId)]});
-  all[tabId] = {mode, ruleId, day};
+  await dnr.updateSessionRules({removeRuleIds:[ruleId], addRules:[feedRule(tabId, ruleId, mode)]});
+  all[tabId] = {mode, ruleId, day, ...(view ? {view} : {})};
   await saveGrants();
 }
 async function revoke(tabId) {
@@ -129,8 +132,9 @@ function feedView(g, state, url) {
 const clockTime = ts => new Date(ts).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
 const feedSummary = state => ({count:state.batch.tweets.length, size:state.batch.size, active:state.batch.active, startedAt:state.batch.startedAt, endsAt:state.batch.endsAt, remainingMs:state.budget.remainingMs, limitMs:state.budget.limitMs});
 async function grantedFeed(tabId, url) {
-  if (!FEED_HOME.test(url)) return null;
   const g = (await loadGrants())[tabId];
+  if (g?.mode === 'start') return P.instagramHome(url) ? {view:{...g.view}} : null;
+  if (!FEED_HOME.test(url)) return null;
   if (!g) return null;
   // The local copy only: a slow sync server must never hold up every page check.
   const state = await feedOp('state', {}, {local:true});
@@ -201,7 +205,10 @@ async function openUnlocked(sender) {
 
 async function enforce(tabId,url) {
   // Leaving X (e.g. Done → the dashboard) ends this tab's feed grant.
-  if (!P.social(url)) { if ((await loadGrants())[tabId]) await revoke(tabId); return; }
+  const held=(await loadGrants())[tabId];
+  if (!P.social(url)) { if (held) await revoke(tabId); return; }
+  // Saved's start page is a one-way door: once it has gone on to your saved page, home is closed again.
+  if (held?.mode === 'start' && held.view?.redirect && !P.instagramHome(url)) await revoke(tabId);
   if (allowed(url)) return;
   if (await grantedFeed(tabId, url)) return;
   const current=await chrome.tabs.get(tabId).catch(() => null);
@@ -321,9 +328,15 @@ chrome.runtime.onMessage.addListener((message,sender,respond) => {
     return openDestination(`https://x.com/search?q=${encodeURIComponent(message.query.trim())}&src=typed_query`,sender);
   };
   else if (ui && message.type === 'personal') task=async()=>{
-    const url=P.personalURLs[message.site]?.[message.action];
+    const url=Object.hasOwn(P.personalURLs,message.site) && Object.hasOwn(P.personalURLs[message.site],message.action) ? P.personalURLs[message.site][message.action] : null;
     if (typeof url !== 'string' || !P.view(url)) throw Error('Choose a supported action.');
-    return openDestination(url,sender);
+    const start=Object.hasOwn(P.startViews,message.site) && Object.hasOwn(P.startViews[message.site],message.action) ? P.startViews[message.site][message.action] : null;
+    if (!start) return openDestination(url,sender);
+    // Grant this tab instagram.com/ before it navigates there.
+    const tabId=sender.tab?.id ?? (await chrome.tabs.create({active:true})).id;
+    await grant(tabId,'start',null,start);
+    await chrome.tabs.update(tabId,{url,active:true});
+    return {opened:true};
   };
   else { respond({error:'Not permitted.'}); return false; }
   serial(task).then(respond,error=>respond({error:error.message}));return true;

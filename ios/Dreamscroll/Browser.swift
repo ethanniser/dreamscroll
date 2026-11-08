@@ -13,6 +13,8 @@ struct BrowserRequest: Identifiable, Equatable {
     let site: Site
     let mode: Mode
     var day: String? = nil
+    /// An Instagram start page (P.startViews) this browser may open on Instagram home, e.g. "saved".
+    var start: String? = nil
 }
 
 /// What the browser asks of the app for the feed snapshot and unlocked home.
@@ -52,7 +54,7 @@ final class BrowserController: NSObject, Identifiable, WKNavigationDelegate, WKU
         config.websiteDataStore = .default()  // the app's own persistent sessions
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = .all
-        Shim.userScripts(request.mode == .unlocked ? .unlocked : .none).forEach(config.userContentController.addUserScript)
+        Shim.userScripts(request.mode == .unlocked ? .unlocked : request.start.map { .start($0) } ?? .none).forEach(config.userContentController.addUserScript)
         // The bundled feed page talks to the app through its own handler (checked to come from the file).
         config.userContentController.addUserScript(WKUserScript(source: """
         if (location.protocol === 'file:') window.chrome = {runtime: {getURL: p => p, sendMessage: m => window.webkit.messageHandlers.dreamscrollPage.postMessage(m)}};
@@ -211,6 +213,8 @@ final class BrowserController: NSObject, Identifiable, WKNavigationDelegate, WKU
         let view = await policy.view(url)
         if view?.kind == "login" { sawLogin = true }
         if isUnlockedHome(view) { return Self.allowWithoutAppLink }
+        // The start page itself (content.js goes on from there, e.g. to your saved posts).
+        if request.start != nil, view?.kind == "home", view?.site == "instagram" { return Self.allowWithoutAppLink }
         guard let view, view.isDestination else {
             reachedFeed(site(of: url))
             return .cancel

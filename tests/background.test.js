@@ -95,9 +95,7 @@ const destinations=[
   [{type:'personal',site:'x',action:'messages'},'https://x.com/i/chat'],
   [{type:'personal',site:'x',action:'compose'},'https://x.com/compose/post'],
   [{type:'personal',site:'instagram',action:'messages'},'https://www.instagram.com/direct/inbox/'],
-  [{type:'personal',site:'instagram',action:'notifications'},'https://www.instagram.com/?sf_personal=notifications'],
-  [{type:'personal',site:'x',action:'saved'},'https://x.com/i/bookmarks'],
-  [{type:'personal',site:'instagram',action:'saved'},'https://www.instagram.com/?sf_personal=saved']
+  [{type:'personal',site:'x',action:'saved'},'https://x.com/i/bookmarks']
 ];
 test('a tab-less main page opens each concrete destination in a new tab, and every destination passes its own check',async()=>{
   const h=harness();
@@ -112,6 +110,46 @@ test('a tab-less main page opens each concrete destination in a new tab, and eve
   }
   assert.equal(h.calls.some(call=>call[0]==='navigate'),false);
   assert.equal(h.session.size,0); assert.equal(h.dynamic.size,0);
+});
+test('Instagram Notifications and Saved open a plain instagram.com/ that only their tab may load',async()=>{
+  for (const [action,extra] of [['notifications',{panel:true}],['saved',{redirect:true}]]) {
+    for (const fromGate of [false,true]) {
+      const h=harness(),sender=fromGate ? h.gate(7,'instagram') : undefined;
+      assert.equal((await h.send({type:'personal',site:'instagram',action},sender)).opened,true);
+      const tab=fromGate ? h.tabs.get(7) : [...h.tabs.values()].at(-1);
+      assert.equal(tab.url,'https://www.instagram.com/'); assert.equal(tab.active,true);
+      assert.equal(h.tabs.size,1);
+      // A session rule lets this tab, and only this tab, load Instagram home.
+      const rules=[...h.session.values()];
+      assert.equal(rules.length,1); assert.deepEqual([...rules[0].condition.tabIds],[tab.id]);
+      for (const url of ['https://www.instagram.com/','https://instagram.com/','https://www.instagram.com/#','https://www.instagram.com/?hl=en']) assert.ok(new RegExp(rules[0].condition.regexFilter).test(url),url);
+      for (const url of ['https://www.instagram.com/explore/','https://www.instagram.com/reels/','https://x.com/','https://evil.com/?https://www.instagram.com/']) assert.ok(!new RegExp(rules[0].condition.regexFilter).test(url),url);
+      const check=await h.send({type:'check'},h.content('https://www.instagram.com/',tab.id));
+      assert.equal(check.allowed,true); assert.deepEqual({...check.view},{kind:action,site:'instagram',start:true,...extra});
+      // Another tab still gets the main page for Instagram home, and X home stays closed here.
+      assert.equal((await h.send({type:'check'},h.content('https://www.instagram.com/',tab.id+50))).allowed,false);
+      assert.equal((await h.send({type:'check'},h.content('https://x.com/home',tab.id))).allowed,false);
+    }
+  }
+});
+test('the Saved start grant ends once the tab goes on to the saved page; the Notifications one ends on leaving the sites',async()=>{
+  const commit=async(h,tabId,url)=>{ h.tabs.get(tabId).url=url; h.listeners.committed({frameId:0,tabId,url}); await h.drain(); };
+  let h=harness(),sender=h.gate(7,'instagram');
+  await h.send({type:'personal',site:'instagram',action:'saved'},sender);
+  await commit(h,7,'https://www.instagram.com/');
+  assert.equal(h.session.size,1);
+  await commit(h,7,'https://www.instagram.com/me.demo/saved/');
+  assert.equal(h.session.size,0);
+  assert.equal((await h.send({type:'check'},h.content('https://www.instagram.com/',7))).allowed,false);
+  h=harness(); sender=h.gate(7,'instagram');
+  await h.send({type:'personal',site:'instagram',action:'notifications'},sender);
+  await commit(h,7,'https://www.instagram.com/');
+  await commit(h,7,'https://www.instagram.com/someone/');
+  // Back from a notification's account returns to the panel.
+  assert.equal(h.session.size,1);
+  assert.equal((await h.send({type:'check'},h.content('https://www.instagram.com/',7))).view.kind,'notifications');
+  await commit(h,7,'chrome-extension://unit/blocked.html?site=instagram');
+  assert.equal(h.session.size,0);
 });
 test('a full dashboard page replaces its own tab instead of opening another',async()=>{
   for (const page of ['blocked.html?site=x','blocked.html?site=instagram&ready=1']) {

@@ -6,7 +6,9 @@
 
 **On the pages it allows,** the content script ([`content.js`](../extension/content.js), [`content.css`](../extension/content.css)) works out which view it's on and keeps only that view's own content. Global navigation, sidebars, recommendation blocks ("Who to follow", "Discover more"), promoted posts and Instagram's Notes carousel are hidden. If it doesn't recognize a page's layout, it covers the page with a short note and a link back, rather than showing a feed by accident.
 
-**Saved posts.** X's Bookmarks is a fixed URL (X redirects it to `/i/history`; both are allowed). Instagram's Saved is `/<you>/saved/`, so the Saved tile opens a start page (`instagram.com/?sf_personal=saved`) where the content script reads your user id from Instagram's session cookie, finds that account's username in the page's own data, and goes to its saved page. No extra requests are made.
+**Saved posts.** X's Bookmarks is a fixed URL (X redirects it to `/i/history`; both are allowed). Instagram's Saved is `/<you>/saved/`, so the Saved tile opens plain `instagram.com/`, where the content script reads your user id from Instagram's session cookie, finds that account's username in the page's own data, and goes to its saved page. No extra requests are made.
+
+**Instagram start pages.** Instagram's desktop Notifications is a panel over home, and Saved starts on home too. Home is a feed, so only the tab opened for one of these may load it: the worker gives that tab a session rule for `instagram.com/` (like the For You capture's grant for X home) and tells its content script which view it is. Nothing marks the URL. Saved's grant ends once the tab has gone on to your saved page, and Notifications' ends when the tab leaves X and Instagram. The iPhone app does the same for Saved in the web view opened for it; its Notifications is Instagram's own mobile activity page.
 
 **Navigation.** Clicking a link to a feed goes back to the main page. Everything else (threads, profiles, DMs, search tabs) lets X and Instagram navigate as usual. Typing happens on the extension's page, so site shortcuts such as X's `N` can't fire.
 

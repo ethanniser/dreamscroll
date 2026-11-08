@@ -96,18 +96,27 @@ test('personal routes are explicit and outrank reserved gates without allowing f
   assert.equal(P.view('https://x.com/notifications/unknown'),null);
 });
 
-test('pasting the Instagram notification-panel link preserves its purpose marker',()=>{
-  assert.equal(P.destination('https://www.instagram.com/?sf_personal=notifications&tracking=remove#fragment').url,'https://www.instagram.com/?sf_personal=notifications');
-  assert.equal(P.view(P.personalURLs.instagram.notifications).panel,true);
+test('Instagram Notifications and Saved start on plain Instagram home, which stays a feed to everyone else',()=>{
+  for (const action of ['notifications','saved']) {
+    assert.equal(P.personalURLs.instagram[action],'https://www.instagram.com/');
+    assert.equal(P.startViews.instagram[action].kind,action); assert.equal(P.startViews.instagram[action].start,true);
+  }
+  assert.equal(P.startViews.instagram.notifications.panel,true); assert.equal(P.startViews.instagram.saved.redirect,true);
+  assert.equal(P.view('https://www.instagram.com/').kind,'home');
+  assert.ok(P.instagramHome('https://www.instagram.com/')); assert.ok(P.instagramHome('https://instagram.com/#'));
+  assert.ok(!P.instagramHome('https://x.com/')); assert.ok(!P.instagramHome('https://www.instagram.com/explore/'));
+  // The old marker URLs are just home now: nothing in a URL opens a start page.
+  for (const url of ['https://www.instagram.com/?sf_personal=notifications','https://www.instagram.com/?sf_personal=saved']) { assert.equal(P.view(url).kind,'home',url); assert.equal(P.destination(url),null,url); }
+  const rules=P.staticRules();
+  assert.ok(!rules.some(rule=>rule.action.type==='allow' && rule.condition.regexFilter && new RegExp(rule.condition.regexFilter).test('https://www.instagram.com/?sf_personal=notifications')));
 });
 
 test('saved posts: X Bookmarks (and folders) and Instagram Saved (and collections) are destinations',()=>{
   const rules=P.staticRules();
   const allowed=url=>rules.some(rule=>rule.action.type==='allow' && rule.condition.regexFilter && new RegExp(rule.condition.regexFilter).test(url));
-  for (const url of ['https://x.com/i/bookmarks','https://x.com/i/bookmarks/1834567890','https://twitter.com/i/bookmarks','https://x.com/i/history','https://x.com/i/history/bookmarks','https://www.instagram.com/someone/saved/','https://www.instagram.com/some.one/saved/all-posts/','https://www.instagram.com/someone/saved/recipes/17890000000000000/','https://www.instagram.com/?sf_personal=saved']) {
+  for (const url of ['https://x.com/i/bookmarks','https://x.com/i/bookmarks/1834567890','https://twitter.com/i/bookmarks','https://x.com/i/history','https://x.com/i/history/bookmarks','https://www.instagram.com/someone/saved/','https://www.instagram.com/some.one/saved/all-posts/','https://www.instagram.com/someone/saved/recipes/17890000000000000/']) {
     assert.equal(P.view(url)?.kind,'saved',url); assert.ok(allowed(url),url);
   }
-  assert.equal(P.view('https://www.instagram.com/?sf_personal=saved').redirect,true);
   for (const url of ['https://x.com/i/bookmarksX','https://x.com/i/bookmarks/abc','https://www.instagram.com/someone/saved/a/b/c/','https://www.instagram.com/someone/savedx/']) assert.notEqual(P.view(url)?.kind,'saved',url);
   assert.equal(P.destination('https://x.com/i/bookmarks').url,'https://x.com/i/bookmarks');
   assert.equal(P.destination('https://www.instagram.com/someone/saved/').url,'https://www.instagram.com/someone/saved/');

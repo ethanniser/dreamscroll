@@ -380,11 +380,13 @@
       if (location.href !== url) return;
       // Home is never a destination, even if a worker reply ever claims otherwise.
       // The reply must also describe this exact URL (guards a worker reply that lags a pushState).
-      // Feed (unlocked) and capture views are the worker's grant for X home in this tab only.
-      const granted = reply?.view?.kind === 'feed' || reply?.view?.kind === 'capture';
-      const expected = granted ? 'home' : reply?.view?.kind;
+      // Feed (unlocked) and capture views are the worker's grant for X home in this tab only;
+      // a start view (Instagram's Notifications panel or Saved) is its grant for Instagram home.
+      const xGrant = reply?.view?.kind === 'feed' || reply?.view?.kind === 'capture';
+      const startGrant = reply?.view?.start === true && reply.view.site === 'instagram' && ['notifications','saved'].includes(reply.view.kind);
+      const expected = xGrant || startGrant ? 'home' : reply?.view?.kind;
       if (!reply?.allowed || !reply.view || reply.view.kind === 'home' || P.view(url)?.kind !== expected || P.view(url)?.site !== reply.view.site ||
-          (granted && reply.view.site !== 'x') || (reply.view.kind === 'feed' && !reply.feed)) { feed=null; location.replace(chrome.runtime.getURL(`blocked.html?site=${P.site(url) || 'x'}`)); return; }
+          (xGrant && reply.view.site !== 'x') || (reply.view.kind === 'feed' && !reply.feed)) { feed=null; location.replace(chrome.runtime.getURL(`blocked.html?site=${P.site(url) || 'x'}`)); return; }
       approved = reply.view;
       feed = reply.view.kind === 'feed' ? {...reply.feed} : null;
     } catch { /* Extension reload or failure: stay hidden. */ }

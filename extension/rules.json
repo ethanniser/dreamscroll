@@ -1068,7 +1068,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "regexFilter": "^https://instagram\\.com/accounts/activity/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1082,7 +1082,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "regexFilter": "^https://instagram\\.com/notifications/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1096,7 +1096,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://m\\.instagram\\.com/\\?sf_personal=notifications(?:[&#]|$)",
+      "regexFilter": "^https://instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1110,7 +1110,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/\\?sf_personal=saved(?:[&#]|$)",
+      "regexFilter": "^https://instagram\\.com/[A-Za-z0-9_.]+/saved(?:/all-posts|/[A-Za-z0-9_.-]+/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1124,7 +1124,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/\\?sf_personal=saved(?:[&#]|$)",
+      "regexFilter": "^https://www\\.instagram\\.com/accounts/activity/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1138,7 +1138,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://m\\.instagram\\.com/\\?sf_personal=saved(?:[&#]|$)",
+      "regexFilter": "^https://www\\.instagram\\.com/notifications/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1152,7 +1152,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/accounts/activity/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1166,7 +1166,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/notifications/?(?:[?#]|$)",
+      "regexFilter": "^https://www\\.instagram\\.com/[A-Za-z0-9_.]+/saved(?:/all-posts|/[A-Za-z0-9_.-]+/[0-9]+)?/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1180,7 +1180,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
+      "regexFilter": "^https://m\\.instagram\\.com/accounts/activity/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1194,7 +1194,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://instagram\\.com/[A-Za-z0-9_.]+/saved(?:/all-posts|/[A-Za-z0-9_.-]+/[0-9]+)?/?(?:[?#]|$)",
+      "regexFilter": "^https://m\\.instagram\\.com/notifications/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
         "main_frame"
@@ -1208,90 +1208,6 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/accounts/activity/?(?:[?#]|$)",
-      "isUrlFilterCaseSensitive": true,
-      "resourceTypes": [
-        "main_frame"
-      ]
-    }
-  },
-  {
-    "id": 459,
-    "priority": 100,
-    "action": {
-      "type": "allow"
-    },
-    "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/notifications/?(?:[?#]|$)",
-      "isUrlFilterCaseSensitive": true,
-      "resourceTypes": [
-        "main_frame"
-      ]
-    }
-  },
-  {
-    "id": 460,
-    "priority": 100,
-    "action": {
-      "type": "allow"
-    },
-    "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
-      "isUrlFilterCaseSensitive": true,
-      "resourceTypes": [
-        "main_frame"
-      ]
-    }
-  },
-  {
-    "id": 461,
-    "priority": 100,
-    "action": {
-      "type": "allow"
-    },
-    "condition": {
-      "regexFilter": "^https://www\\.instagram\\.com/[A-Za-z0-9_.]+/saved(?:/all-posts|/[A-Za-z0-9_.-]+/[0-9]+)?/?(?:[?#]|$)",
-      "isUrlFilterCaseSensitive": true,
-      "resourceTypes": [
-        "main_frame"
-      ]
-    }
-  },
-  {
-    "id": 462,
-    "priority": 100,
-    "action": {
-      "type": "allow"
-    },
-    "condition": {
-      "regexFilter": "^https://m\\.instagram\\.com/accounts/activity/?(?:[?#]|$)",
-      "isUrlFilterCaseSensitive": true,
-      "resourceTypes": [
-        "main_frame"
-      ]
-    }
-  },
-  {
-    "id": 463,
-    "priority": 100,
-    "action": {
-      "type": "allow"
-    },
-    "condition": {
-      "regexFilter": "^https://m\\.instagram\\.com/notifications/?(?:[?#]|$)",
-      "isUrlFilterCaseSensitive": true,
-      "resourceTypes": [
-        "main_frame"
-      ]
-    }
-  },
-  {
-    "id": 464,
-    "priority": 100,
-    "action": {
-      "type": "allow"
-    },
-    "condition": {
       "regexFilter": "^https://m\\.instagram\\.com/direct(?:/[A-Za-z0-9_-]+)*/?(?:[?#]|$)",
       "isUrlFilterCaseSensitive": true,
       "resourceTypes": [
@@ -1300,7 +1216,7 @@
     }
   },
   {
-    "id": 465,
+    "id": 459,
     "priority": 100,
     "action": {
       "type": "allow"
@@ -1588,7 +1504,7 @@
     }
   },
   {
-    "id": 1112,
+    "id": 1106,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1604,7 +1520,7 @@
     }
   },
   {
-    "id": 1113,
+    "id": 1107,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1620,7 +1536,7 @@
     }
   },
   {
-    "id": 1114,
+    "id": 1108,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1636,7 +1552,7 @@
     }
   },
   {
-    "id": 1115,
+    "id": 1109,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1652,7 +1568,7 @@
     }
   },
   {
-    "id": 1116,
+    "id": 1110,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1668,7 +1584,7 @@
     }
   },
   {
-    "id": 1117,
+    "id": 1111,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1684,7 +1600,7 @@
     }
   },
   {
-    "id": 1118,
+    "id": 1112,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1700,7 +1616,7 @@
     }
   },
   {
-    "id": 1119,
+    "id": 1113,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1716,7 +1632,7 @@
     }
   },
   {
-    "id": 1120,
+    "id": 1114,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1732,7 +1648,7 @@
     }
   },
   {
-    "id": 1121,
+    "id": 1115,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1748,7 +1664,7 @@
     }
   },
   {
-    "id": 1122,
+    "id": 1116,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1764,7 +1680,7 @@
     }
   },
   {
-    "id": 1123,
+    "id": 1117,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1780,7 +1696,7 @@
     }
   },
   {
-    "id": 1124,
+    "id": 1118,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1796,7 +1712,7 @@
     }
   },
   {
-    "id": 1125,
+    "id": 1119,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1812,7 +1728,7 @@
     }
   },
   {
-    "id": 1126,
+    "id": 1120,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1828,7 +1744,7 @@
     }
   },
   {
-    "id": 1127,
+    "id": 1121,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1844,7 +1760,7 @@
     }
   },
   {
-    "id": 1128,
+    "id": 1122,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1860,7 +1776,7 @@
     }
   },
   {
-    "id": 1129,
+    "id": 1123,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1876,7 +1792,7 @@
     }
   },
   {
-    "id": 1130,
+    "id": 1124,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1892,7 +1808,7 @@
     }
   },
   {
-    "id": 1131,
+    "id": 1125,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1908,7 +1824,7 @@
     }
   },
   {
-    "id": 1132,
+    "id": 1126,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1924,7 +1840,7 @@
     }
   },
   {
-    "id": 1133,
+    "id": 1127,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1940,7 +1856,7 @@
     }
   },
   {
-    "id": 1134,
+    "id": 1128,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1956,7 +1872,7 @@
     }
   },
   {
-    "id": 1135,
+    "id": 1129,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1972,7 +1888,7 @@
     }
   },
   {
-    "id": 1136,
+    "id": 1130,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -1988,7 +1904,7 @@
     }
   },
   {
-    "id": 1137,
+    "id": 1131,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2004,7 +1920,7 @@
     }
   },
   {
-    "id": 1138,
+    "id": 1132,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2020,7 +1936,7 @@
     }
   },
   {
-    "id": 1139,
+    "id": 1133,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2036,7 +1952,7 @@
     }
   },
   {
-    "id": 1140,
+    "id": 1134,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2052,7 +1968,7 @@
     }
   },
   {
-    "id": 1141,
+    "id": 1135,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2068,7 +1984,7 @@
     }
   },
   {
-    "id": 1142,
+    "id": 1136,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2084,7 +2000,7 @@
     }
   },
   {
-    "id": 1143,
+    "id": 1137,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2100,7 +2016,7 @@
     }
   },
   {
-    "id": 1144,
+    "id": 1138,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2116,7 +2032,7 @@
     }
   },
   {
-    "id": 1145,
+    "id": 1139,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2132,7 +2048,7 @@
     }
   },
   {
-    "id": 1146,
+    "id": 1140,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2148,7 +2064,7 @@
     }
   },
   {
-    "id": 1147,
+    "id": 1141,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2164,7 +2080,7 @@
     }
   },
   {
-    "id": 1148,
+    "id": 1142,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2180,7 +2096,7 @@
     }
   },
   {
-    "id": 1149,
+    "id": 1143,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2196,7 +2112,7 @@
     }
   },
   {
-    "id": 1150,
+    "id": 1144,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2212,7 +2128,7 @@
     }
   },
   {
-    "id": 1151,
+    "id": 1145,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2228,7 +2144,7 @@
     }
   },
   {
-    "id": 1152,
+    "id": 1146,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2244,7 +2160,7 @@
     }
   },
   {
-    "id": 1153,
+    "id": 1147,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2260,7 +2176,7 @@
     }
   },
   {
-    "id": 1154,
+    "id": 1148,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2276,7 +2192,7 @@
     }
   },
   {
-    "id": 1155,
+    "id": 1149,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2292,7 +2208,7 @@
     }
   },
   {
-    "id": 1156,
+    "id": 1150,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2308,7 +2224,7 @@
     }
   },
   {
-    "id": 1157,
+    "id": 1151,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2324,7 +2240,7 @@
     }
   },
   {
-    "id": 1158,
+    "id": 1152,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2340,7 +2256,7 @@
     }
   },
   {
-    "id": 1159,
+    "id": 1153,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2356,7 +2272,7 @@
     }
   },
   {
-    "id": 1160,
+    "id": 1154,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2372,7 +2288,7 @@
     }
   },
   {
-    "id": 1161,
+    "id": 1155,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2388,7 +2304,7 @@
     }
   },
   {
-    "id": 1162,
+    "id": 1156,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2404,7 +2320,7 @@
     }
   },
   {
-    "id": 1163,
+    "id": 1157,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2420,7 +2336,7 @@
     }
   },
   {
-    "id": 1164,
+    "id": 1158,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2436,7 +2352,7 @@
     }
   },
   {
-    "id": 1165,
+    "id": 1159,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2452,7 +2368,7 @@
     }
   },
   {
-    "id": 1166,
+    "id": 1160,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2468,7 +2384,7 @@
     }
   },
   {
-    "id": 1167,
+    "id": 1161,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2484,7 +2400,7 @@
     }
   },
   {
-    "id": 1168,
+    "id": 1162,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2500,7 +2416,7 @@
     }
   },
   {
-    "id": 1169,
+    "id": 1163,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2516,7 +2432,7 @@
     }
   },
   {
-    "id": 1170,
+    "id": 1164,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2532,7 +2448,7 @@
     }
   },
   {
-    "id": 1171,
+    "id": 1165,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2548,7 +2464,7 @@
     }
   },
   {
-    "id": 1172,
+    "id": 1166,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2564,7 +2480,7 @@
     }
   },
   {
-    "id": 1173,
+    "id": 1167,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2580,7 +2496,7 @@
     }
   },
   {
-    "id": 1174,
+    "id": 1168,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2596,7 +2512,7 @@
     }
   },
   {
-    "id": 1175,
+    "id": 1169,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2612,7 +2528,7 @@
     }
   },
   {
-    "id": 1176,
+    "id": 1170,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2628,7 +2544,7 @@
     }
   },
   {
-    "id": 1177,
+    "id": 1171,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2644,7 +2560,7 @@
     }
   },
   {
-    "id": 1178,
+    "id": 1172,
     "priority": 50,
     "action": {
       "type": "redirect",
@@ -2660,7 +2576,7 @@
     }
   },
   {
-    "id": 1179,
+    "id": 1173,
     "priority": 50,
     "action": {
       "type": "redirect",

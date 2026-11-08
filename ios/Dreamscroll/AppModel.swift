@@ -38,14 +38,20 @@ final class AppModel: FeedHost {
         case (.instagram, .notifications): URL(string: "https://www.instagram.com/accounts/activity/")
         case (.instagram, .messages): URL(string: "https://www.instagram.com/direct/inbox/")
         case (.instagram, .compose): nil
-        // Saved posts: X's Bookmarks; Instagram's start page finds your /<you>/saved/ (content.js).
+        // Saved posts: X's Bookmarks; on Instagram, home is the start page where content.js
+        // finds your /<you>/saved/ (allowed only in a browser opened for it).
         case (.x, .saved): URL(string: "https://x.com/i/bookmarks")
-        case (.instagram, .saved): URL(string: "https://www.instagram.com/?sf_personal=saved")
+        case (.instagram, .saved): URL(string: "https://www.instagram.com/")
         }
     }
 
     func open(_ action: Action, on site: Site) async {
         guard let url = url(for: action, on: site) else { return }
+        if site == .instagram && action == .saved {
+            notice = nil
+            present(BrowserRequest(url: url, site: site, mode: .browse, start: action.rawValue))
+            return
+        }
         await open(url, site: site)
     }
 

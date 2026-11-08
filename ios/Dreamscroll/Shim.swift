@@ -6,14 +6,16 @@ import WebKit
 enum Shim {
     static let world = WKContentWorld.world(name: "Dreamscroll")
 
-    /// Which grant a web view holds: none, the hidden snapshot capture, or an unlock.
-    enum Grant { case none, capture(nonce: String), unlocked }
+    /// Which grant a web view holds: none, the hidden snapshot capture, an unlock, or
+    /// Instagram home as the start page for an action (P.startViews, e.g. "saved").
+    enum Grant { case none, capture(nonce: String), unlocked, start(String) }
 
     static func userScripts(_ grant: Grant = .none) -> [WKUserScript] {
         let css = jsString(Bundled.css)
-        var captureNonce = "null", unlockable = "false"
+        var captureNonce = "null", unlockable = "false", startAction = "null"
         if case .capture(let nonce) = grant { captureNonce = jsString(nonce) }
         if case .unlocked = grant { unlockable = "true" }
+        if case .start(let action) = grant { startAction = jsString(action) }
         // Like an extension's match patterns: only X and Instagram pages, never the
         // web view's initial about:blank (which content.js would treat as a feed).
         let source = """
@@ -30,6 +32,7 @@ enum Shim {
           const P = globalThis.SocialPolicy;
           const login = new RegExp(\(jsString(LoginRoutes.pattern)));
           const CAPTURE = \(captureNonce), UNLOCKABLE = \(unlockable);
+          const START = \(startAction) && Object.hasOwn(P.startViews.instagram, \(startAction)) ? P.startViews.instagram[\(startAction)] : null;
           // App-only view: sign-in pages are allowed as-is (see content.js 'login').
           const view = P.view;
           P.view = url => login.test(String(url)) ? {kind:'login', site: /instagram\\.com/.test(String(url)) ? 'instagram' : 'x'} : view(url);
@@ -43,6 +46,8 @@ enum Shim {
                 const url = String(message.url || location.href);
                 // The capture web view (the only one with CAPTURE set) may show X home.
                 if (CAPTURE && P.view(url)?.kind === 'home' && P.view(url)?.site === 'x') return {allowed: true, view: {kind: 'capture', site: 'x'}};
+                // A web view opened for an Instagram start page (Saved) may show Instagram home.
+                if (START && P.instagramHome(url)) return {allowed: true, view: {...START}};
                 const v = P.view(url);
                 if (UNLOCKABLE && v?.kind === 'home' && v.site === 'x') {
                   const state = await native({type: 'unlockState'});

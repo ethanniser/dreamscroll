@@ -8,6 +8,10 @@ Notable changes to Dreamscroll. The format follows [Keep a Changelog](https://ke
 
 - **Saved posts:** a Saved tile for X (Bookmarks, including folders) and Instagram (Saved, including collections), in the extension and the iPhone app.
 
+### Changed
+
+- Instagram Notifications and Saved open on a plain `instagram.com/` address, with no `?sf_personal=` marker for Instagram to see.
+
 ## [1.0.0] - 2026-11-07
 
 First public release.

@@ -47,9 +47,6 @@
       ['saved','/i/bookmarks(?:/[0-9]+)?/?'],
       ['saved','/i/history(?:/[a-z_]+)?/?']
     ].map(([kind,path,subpage]) => ({site:'x',kind,...(subpage ? {subpage:true} : {}),pattern:`^https://${escape(host)}${path}${end}`}))),
-    ...igHosts.map(host => ({site:'instagram',kind:'notifications',panel:true,pattern:`^https://${escape(host)}/\\?sf_personal=notifications(?:[&#]|$)`})),
-    // Saved lives at /<you>/saved/; this start page finds "you" and goes there.
-    ...igHosts.map(host => ({site:'instagram',kind:'saved',redirect:true,pattern:`^https://${escape(host)}/\\?sf_personal=saved(?:[&#]|$)`})),
     ...igHosts.flatMap(host => [
       ['notifications','/accounts/activity/?'],
       ['notifications','/notifications/?'],
@@ -61,8 +58,14 @@
   ];
   const personalURLs = {
     x:{notifications:'https://x.com/notifications',messages:'https://x.com/i/chat',compose:'https://x.com/compose/post',saved:'https://x.com/i/bookmarks'},
-    instagram:{notifications:'https://www.instagram.com/?sf_personal=notifications',messages:'https://www.instagram.com/direct/inbox/',saved:'https://www.instagram.com/?sf_personal=saved'}
+    instagram:{notifications:'https://www.instagram.com/',messages:'https://www.instagram.com/direct/inbox/',saved:'https://www.instagram.com/'}
   };
+  // Instagram's desktop Notifications is a panel over home, and Saved lives at
+  // /<you>/saved/: both start on a plain instagram.com/ that only the tab (or web
+  // view) opened for them may load. content.js opens the panel, or finds "you" and
+  // goes to your saved page.
+  const startViews = {instagram:{notifications:{kind:'notifications',site:'instagram',panel:true,start:true},saved:{kind:'saved',site:'instagram',redirect:true,start:true}}};
+  const instagramHome = raw => { const v = view(raw); return v?.kind === 'home' && v.site === 'instagram'; };
   function view(raw) {
     const target = post(raw);
     if (target) return {kind:'post', site:target.site, post:target};
@@ -70,7 +73,7 @@
       const url = new URL(raw), name = site(raw);
       if (!name || url.protocol !== 'https:' || url.port || url.username || url.password) return null;
       const personal = personalEntries.find(entry => new RegExp(entry.pattern).test(url.href));
-      if (personal) return {kind:personal.kind,site:name,...(personal.panel ? {panel:true} : {}),...(personal.subpage ? {subpage:true} : {}),...(personal.redirect ? {redirect:true} : {})};
+      if (personal) return {kind:personal.kind,site:name,...(personal.subpage ? {subpage:true} : {})};
       const path = url.pathname.replace(/\/$/, '');
       if (!path || (name === 'x' && path === '/home')) return {kind:'home',site:name};
       // A search is a destination only when typed: cashtag/trend/hashtag clicks
@@ -104,7 +107,7 @@
     url.hash = '';
     const kind = view(url.href);
     if (!['profile','search','notifications','messages','compose','saved'].includes(kind?.kind)) return null;
-    if (kind.kind !== 'search') url.search = kind.panel ? '?sf_personal=notifications' : '';
+    if (kind.kind !== 'search') url.search = '';
     return {site:site(url.href),url:url.href};
   }
   function staticRules() {
@@ -127,5 +130,5 @@
     }
     return rules;
   }
-  globalThis.SocialPolicy = {post, social, patterns, site, view, searchPatterns, profilePatterns, personalEntries, personalURLs, destination, staticRules};
+  globalThis.SocialPolicy = {post, social, patterns, site, view, searchPatterns, profilePatterns, personalEntries, personalURLs, startViews, instagramHome, destination, staticRules};
 })();
