@@ -77,6 +77,15 @@ test('a post that quotes another post is found by its own timestamp, not the quo
   dom.window.close();
 });
 
+test('an edited post is found by its timestamp, which links to its edit history',async()=>{
+  const edited='<article data-testid="tweet" id="edited"><p>Lecture notes</p><a role="link" href="/anj/status/123/history"><time>Last edited 9:00 AM</time></a></article>';
+  const {dom,doc,concealed}=await fixture(`<body><main>${column(edited)}</main></body>`,'https://x.com/anj/status/123');
+  try {
+    assert.equal(concealed(doc.getElementById('edited')),false);
+    assert.equal(doc.getElementById('sf-empty'),null);
+  } finally { dom.window.close(); }
+});
+
 test('videos inside a post stay visible; promoted posts (wrapped in placementTracking) are hidden',async()=>{
   // Live x.com (2026-11): X wraps a post's video player in placementTracking too.
   const post='<article data-testid="tweet" id="focal"><a href="/alice/status/123"><time>now</time></a><div data-testid="tweetPhoto"><div data-testid="placementTracking" id="video-wrap"><div data-testid="videoPlayer" id="video">video</div></div></div></article>';

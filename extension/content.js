@@ -32,7 +32,9 @@
         return !(card && article.contains(card));
       });
       const links = approved.site === 'x' ? [own?.closest('a')].filter(Boolean) : [...article.querySelectorAll('a[href]')];
-      if (links.some(a => P.post(a.href)?.key === key)) return article;
+      // An edited post's timestamp links to its edit history (/status/<id>/history, live 2026-11).
+      const postKey = href => P.post(href)?.key || P.post(href.replace(/(\/status\/[0-9]+)\/history\/?(?=[?#]|$)/, '$1'))?.key;
+      if (links.some(a => postKey(a.href) === key)) return article;
     }
     return null;
   }
