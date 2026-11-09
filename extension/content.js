@@ -302,7 +302,7 @@
     } else if (view.kind === 'messages') {
       // PIN/setup and new-conversation dialogs are part of the native inbox.
       candidate=document.querySelector('[role="dialog"]:not([aria-hidden="true"]):not([hidden])') || document.querySelector('main,[role="main"]') || (view.site === 'instagram' ? instagramInboxShell() : null);
-    } else if (view.kind === 'profile' || view.kind === 'search' || view.kind === 'notifications' || view.kind === 'saved') {
+    } else if (['profile','search','notifications','saved','quotes'].includes(view.kind)) {
       candidate = document.querySelector(view.site === 'x' ? '[data-testid="primaryColumn"]' : 'main');
     } else if (view.kind === 'capture') {
       isolateCapture();
@@ -330,7 +330,7 @@
       }
     }
     if (approved !== view) return; // A newer check took over; it will isolate again.
-    if (candidate && view.site === 'x' && ['post','profile','search','saved'].includes(view.kind)) trimRecommendations(candidate, view.kind);
+    if (candidate && view.site === 'x' && ['post','profile','search','saved','quotes'].includes(view.kind)) trimRecommendations(candidate, view.kind);
     if (candidate && view.site === 'instagram' && view.kind === 'messages') hideInstagramNotes(candidate);
     document.documentElement.setAttribute('data-sf-view',view.kind);
     document.documentElement.toggleAttribute('data-sf-panel',!!view.panel);

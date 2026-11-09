@@ -7,6 +7,7 @@ Notable changes to Dreamscroll. The format follows [Keep a Changelog](https://ke
 ### Added
 
 - **Saved posts:** a Saved tile for X (Bookmarks, including folders) and Instagram (Saved, including collections), in the extension and the iPhone app.
+- **Quotes:** "View quotes" on an X post opens that post's quotes.
 
 ### Changed
 

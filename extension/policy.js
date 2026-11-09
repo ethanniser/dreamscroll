@@ -45,7 +45,10 @@
       ['compose','/i/foundmedia/search/?',true],
       // Saved posts: Bookmarks and bookmark folders, which X now redirects to /i/history (live 2026-11).
       ['saved','/i/bookmarks(?:/[0-9]+)?/?'],
-      ['saved','/i/history(?:/[a-z_]+)?/?']
+      ['saved','/i/history(?:/[a-z_]+)?/?'],
+      // A post's quotes ("View quotes"): only posts quoting that one post.
+      ['quotes','/[A-Za-z0-9_]+/status/[0-9]+/quotes/?'],
+      ['quotes','/i/web/status/[0-9]+/quotes/?']
     ].map(([kind,path,subpage]) => ({site:'x',kind,...(subpage ? {subpage:true} : {}),pattern:`^https://${escape(host)}${path}${end}`}))),
     ...igHosts.flatMap(host => [
       ['notifications','/accounts/activity/?'],
@@ -106,7 +109,7 @@
     }
     url.hash = '';
     const kind = view(url.href);
-    if (!['profile','search','notifications','messages','compose','saved'].includes(kind?.kind)) return null;
+    if (!['profile','search','notifications','messages','compose','saved','quotes'].includes(kind?.kind)) return null;
     if (kind.kind !== 'search') url.search = '';
     return {site:site(url.href),url:url.href};
   }

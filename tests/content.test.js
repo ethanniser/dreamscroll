@@ -98,6 +98,19 @@ test('a post X can\'t show (suspended, deleted) shows X\'s own notice, not our c
   } finally { dom.window.close(); }
 });
 
+test('a post\'s quotes page shows its column of quotes, without navigation, sidebar or recommendations',async()=>{
+  const quote=tweet('7','Quoting it');
+  const wtf='<div data-testid="cellInnerDiv" id="wtf-head"><h2>Who to follow</h2></div><div data-testid="cellInnerDiv" id="wtf-user"><div data-testid="UserCell">Someone</div></div>';
+  const {dom,doc,concealed}=await fixture(`<body><nav id="nav">Nav</nav><main>${column(quote+wtf)}</main><aside id="side">Trends</aside></body>`,'https://x.com/alice/status/123/quotes');
+  try {
+    assert.equal(concealed(doc.getElementById('post-7')),false);
+    assert.equal(concealed(doc.getElementById('nav')),true);
+    assert.equal(concealed(doc.getElementById('side')),true);
+    assert.equal(concealed(doc.getElementById('wtf-head')),true);
+    assert.equal(doc.getElementById('sf-empty'),null);
+  } finally { dom.window.close(); }
+});
+
 test('a deleted post shows X\'s "doesn\'t exist" message, not our cover',async()=>{
   // Live x.com (2026-11): no article, just the column's error-detail.
   const error='<div aria-label="Home timeline"><div data-testid="error-detail" id="error"><span>Hmm...this page doesn’t exist. Try searching for something else.</span></div></div>';

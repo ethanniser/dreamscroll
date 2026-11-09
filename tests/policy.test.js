@@ -111,6 +111,16 @@ test('Instagram Notifications and Saved start on plain Instagram home, which sta
   assert.ok(!rules.some(rule=>rule.action.type==='allow' && rule.condition.regexFilter && new RegExp(rule.condition.regexFilter).test('https://www.instagram.com/?sf_personal=notifications')));
 });
 
+test('a post\'s quotes ("View quotes") are a destination; other post sub-pages are not',()=>{
+  const rules=P.staticRules();
+  const allowed=url=>rules.some(rule=>rule.action.type==='allow' && rule.condition.regexFilter && new RegExp(rule.condition.regexFilter).test(url));
+  for (const url of ['https://x.com/alice/status/123/quotes','https://x.com/alice/status/123/quotes/','https://twitter.com/alice/status/123/quotes?s=46','https://x.com/i/web/status/123/quotes']) {
+    assert.equal(P.view(url)?.kind,'quotes',url); assert.ok(allowed(url),url);
+  }
+  assert.equal(P.destination('https://x.com/alice/status/123/quotes?s=46#x').url,'https://x.com/alice/status/123/quotes');
+  for (const url of ['https://x.com/alice/status/123/quotesX','https://x.com/alice/status/abc/quotes','https://x.com/alice/status/123/quotes/more','https://x.com/alice/quotes']) { assert.notEqual(P.view(url)?.kind,'quotes',url); assert.ok(!allowed(url),url); }
+});
+
 test('saved posts: X Bookmarks (and folders) and Instagram Saved (and collections) are destinations',()=>{
   const rules=P.staticRules();
   const allowed=url=>rules.some(rule=>rule.action.type==='allow' && rule.condition.regexFilter && new RegExp(rule.condition.regexFilter).test(url));

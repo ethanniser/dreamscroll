@@ -55,6 +55,7 @@ Automated tests cover the rules, the parser, the worker's message handling and b
 
 - Each site's root opens the main page, and so does the toolbar icon.
 - Notifications, messages, an account and an X search each show only their own content, without global navigation or sidebars.
+- "View quotes" on a post opens its quotes, without navigation or sidebars.
 - **Post** opens the composer centered with no feed behind it. Don't post; closing it returns to the main page.
 - Instagram messages show search and the conversation list, not the Notes carousel.
 - A post link opened from elsewhere loads directly, and a reply's permalink opens its thread.
