@@ -2,6 +2,8 @@
 
 Instructions for people and coding agents changing this repository. To **install** it, follow [INSTALL.md](INSTALL.md) instead.
 
+**Agents:** also read `AGENTS.local.md` if it exists (git-ignored; the maintainer's devices, servers and current open items), and [docs/how-it-works.md](docs/how-it-works.md) before changing filtering. Repo skills live in `.agents/skills/` (also at `.claude/skills/`): `iphone-device` (build, install and drive the app on a real iPhone) and `live-check` (verify a change on the real sites).
+
 ## Layout
 
 | Path | What |
@@ -50,6 +52,26 @@ CI runs the tests, `check` (which fails if generated files are stale), the sync 
 - **Sanitize everything from X.** Tweets pass through `sanitizeTweet` before they're stored or shown, and pages render them with React (no HTML strings). Only `https` links and X's own image hosts are allowed.
 - **Never touch real accounts in tests or media.** Use the demo data in `scripts/media/demo.mjs`. Don't post, like, follow or send messages while testing on a real account.
 - **Live sites change.** Tests use fixtures, so after a change to filtering, also run the manual checks at the end of [docs/how-it-works.md](docs/how-it-works.md).
+
+## Gotchas
+
+Learned the hard way; check here before debugging something that "should work".
+
+- **Chrome compiles each rule's regex with RE2 under a 2 KB memory budget.** Bounded quantifiers (`{1,15}`) blow it and the rule is silently skipped in some browsers: use unbounded repeats. `scripts/check-regex.py` (part of `bun run test`) checks every generated pattern; trust its exit code, not a skim of its output.
+- **Network rules never see URL fragments, and can't know intent.** Anything that must load a normally gated page (X home for the For You capture, Instagram home for the Notifications panel and Saved) gets a tab-scoped session rule, a *grant* in `background.js`, and the worker tells that tab's content script which view it is. Don't put markers in URLs.
+- **Static rule ids are blocks:** posts 100+, profiles 200+, personal routes 400+ (these shift when entries are added; that's fine), searches 500+, gate redirects a fixed block at 600+, reserved paths 1000+. Duplicate ids silently drop rules.
+- **X keeps menus, hover cards, toasts and confirm sheets in `#layers`,** which is hidden. On non-compose views `content.js` reveals only the allowlisted pop-ups (`VIEW_POPOVER`); a new X menu that "doesn't open" probably needs adding there.
+- **Matching the post on a post page** uses the post's own `<time>` link, skips quote cards (`[role="link"]:not(a)`), and accepts `/status/<id>/history` (edited posts). Posts X can't show fall back to X's own notice: a non-tweet article (suspended, protected) or `[data-testid="error-detail"]` (deleted).
+- **Never `display:none` X's page while it starts** (see how-it-works.md): pages load at `opacity: 0`.
+- **Tests:** the worker runs in a `vm` context, so spread its arrays (`[...arr]`) before `deepEqual`. Content tests take `{reply}` to fake the worker's `check` answer (`startReply(action)` builds a start view). A new test should fail without the fix: check that once.
+- **Shell:** zsh expands unquoted globs such as `--include=*.js` (quote them); `rg` with no path inside `$(...)` waits on stdin (pass `.`).
+
+## Live sites and real accounts
+
+- Only the maintainer's own browser and phone are signed in. Inspect live pages with narrow structural queries (test ids, roles, element counts), never by dumping text from inboxes or notifications.
+- Never post, like, repost, follow, bookmark or send messages, even to test. Opening menus and composers is fine; submitting isn't.
+- Agents can't reload an unpacked extension (`chrome://extensions` is off limits); the person reloads it. Say which commit needs loading.
+- Changes to system or security settings on a phone or computer (Safari extensions, permissions) are the owner's to make; at most navigate there and stop.
 
 ## Releases
 

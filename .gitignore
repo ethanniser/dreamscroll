@@ -2,3 +2,6 @@ node_modules/
 .preview/
 extension/_metadata/
 .DS_Store
+
+# Maintainer-local agent notes (devices, servers, open items)
+AGENTS.local.md
