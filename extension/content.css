@@ -3,10 +3,12 @@
    start-up from a paused animation's computed transform; without a layout box that
    reads "none", the signature is wrong, and search (which checks it) returns 404.
    So: invisible while loading, opaque overlay when no view is found, and empty
-   top-level elements (which show nothing) keep their box. */
+   top-level elements (which show nothing) keep their box. A span, textarea or input
+   directly in <body> is a site's copy helper ("Copy link" selects it and runs the copy
+   command): hidden, nothing is selected and the clipboard silently stays as it was. */
 html:not([data-sf-ready]) body { opacity: 0 !important; pointer-events: none !important; }
 [data-sf-path]:not(body) > :not([data-sf-path]):not([data-sf-target]):not([data-sf-overlay]):not(#sf-empty):not(#sf-feed-pill),
-body[data-sf-path] > :not([data-sf-path]):not([data-sf-target]):not([data-sf-overlay]):not(#sf-empty):not(#sf-feed-pill):not(:empty) { display: none !important; }
+body[data-sf-path] > :not([data-sf-path]):not([data-sf-target]):not([data-sf-overlay]):not(#sf-empty):not(#sf-feed-pill):not(:empty):not(span):not(textarea):not(input) { display: none !important; }
 /* Only the outer shell is resized. Never change tweet cells or virtual-list geometry. */
 [data-sf-path] { width: 100% !important; min-width: 0 !important; max-width: none !important; margin-inline: auto !important; }
 main[data-sf-path] { align-items: center !important; }

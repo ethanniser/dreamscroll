@@ -16,6 +16,7 @@ Notable changes to Dreamscroll. The format follows [Keep a Changelog](https://ke
 ### Fixed
 
 - A deleted post shows X's own "this page doesn't exist" message instead of Dreamscroll's "not available" cover.
+- Share › Copy link copies the link (it was leaving the clipboard unchanged).
 
 ## [1.0.0] - 2026-11-07
 
